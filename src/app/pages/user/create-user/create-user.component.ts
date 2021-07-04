@@ -17,8 +17,7 @@ export class CreateUserComponent implements OnInit {
   messageError: any;
   users: any = [];
   id:any;
-  btn:boolean = false;
-  termo:any = '';
+  textFilter:boolean = false;
 
 
   constructor(
@@ -34,7 +33,7 @@ export class CreateUserComponent implements OnInit {
     this.activatedRouter.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
-        this.btn = true;
+        this.textFilter = true;
         this.getUser(this.id);
       }
     })
@@ -106,14 +105,10 @@ export class CreateUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    
       if (this.id) {
-      this.updateUser(this.id);
-       this.termo = "Editar";
-        
+      this.updateUser(this.id);  
     } else {
         this.createUser();
-        this.termo = "Cadastrar";
     }
     
   }

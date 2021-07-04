@@ -20,11 +20,9 @@ export class UserService {
     }
 
     createUser(user: User){
-     
         this.token = localStorage.getItem('token');
         const decoded: any = jwt_decode(this.token);
         user.id_login_insert = decoded.id;
-        console.log(user);
         return this.http.post<User>(`${environment.api}/user/create`, user);    
     }
 
@@ -33,7 +31,9 @@ export class UserService {
     }
 
     updateUser(id:any, user: User){
-        console.log(id, user);
+        this.token = localStorage.getItem('token');
+        const decoded: any = jwt_decode(this.token);
+        user.id_login_update = decoded.id;
         return this.http.patch(`${environment.api}/user/${id}`, user );
     }
 
