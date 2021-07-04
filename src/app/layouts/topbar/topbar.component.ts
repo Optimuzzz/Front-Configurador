@@ -5,8 +5,9 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { LanguageService } from '../../core/services/language.service';
 import { environment } from '../../../environments/environment';
+import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
 
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
+
 
 @Component({
   selector: 'app-topbar',
@@ -28,7 +29,7 @@ export class TopbarComponent implements OnInit {
     private router: Router,
     public languageService: LanguageService,
     public _cookiesService: CookieService,
-    private authFackservice: AuthfakeauthenticationService,
+    private authFackservice: AuthAuthenticationService
   ) { }
 
   /***

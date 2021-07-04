@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { AuthfakeauthenticationService } from 'src/app/core/services/authfake.service';
+import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
 
 import { LAYOUT_MODE } from '../../../layouts/layouts.model';
 
@@ -31,10 +31,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private authFackservice: AuthfakeauthenticationService,
-    // init: {
-    //   error?: any;
-    // }
+    private authFackservice: AuthAuthenticationService,
   ){}
   
   ngOnInit(): void {

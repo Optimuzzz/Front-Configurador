@@ -25,6 +25,8 @@ export class RegisterComponent implements OnInit {
   successmsg = false;
   error: any;
   messageError: string = '';
+  btnText:string = 'Cadastrar';
+  showSpinner = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +54,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.btnText = 'Aguarde...';
+    this.showSpinner = true;
 
     this.userService.register(this.registerForm.value)
       .pipe(first())
@@ -65,6 +69,8 @@ export class RegisterComponent implements OnInit {
         (error: any) => {
           this.error = error ? error : '';
           this.messageError = error.error.message;
+          this.btnText = 'Cadastrar';
+          this.showSpinner = false;
         });
   }
 

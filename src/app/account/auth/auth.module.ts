@@ -12,6 +12,7 @@ import { SteptwoverificationComponent } from './steptwoverification/steptwoverif
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RecoverpwdComponent } from './recoverpwd/recoverpwd.component';
+import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RecoverpwdComponent } from './recoverpwd/recoverpwd.component';
     SteptwoverificationComponent,
     LoginComponent,
     RegisterComponent,
-    RecoverpwdComponent
+    RecoverpwdComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,

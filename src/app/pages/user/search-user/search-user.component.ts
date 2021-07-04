@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { User } from 'src/app/core/models/auth.models';
 import { UserService } from '../userService/userService';
 
 @Component({
@@ -10,7 +11,8 @@ import { UserService } from '../userService/userService';
 })
 export class SearchUserComponent implements OnInit {
   
-  users:any[] = [];
+  users:User[] = [];
+  loadingUser: boolean = false;
   
   constructor(
     private userService: UserService,
@@ -18,25 +20,21 @@ export class SearchUserComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.loadingUser = true;
     this.userService.getAll()
-    .pipe()
+    .pipe(map(responserData => {
+      const usersArray = [];
+      for (const key in responserData) {
+        if (responserData.hasOwnProperty(key)) {
+          usersArray.push({...responserData[key], id: key});  
+        }
+      }
+      return usersArray;
+    }))
     .subscribe(
      userData =>{
+        this.loadingUser = false;
         this.users = userData;
     });
-    }
-
-    // Edit(id:number){
-    //   this.userService.getId(id)
-    //   .pipe()
-    //   .subscribe(
-    //     userData => {
-    //       // console.log(userData);
-    //       if(userData){
-    //         this.router.navigate([`user/create-user/${id}`]);
-    //       }
-    //     }
-    //   )
-    // }
-  
+    } 
 }

@@ -1,22 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 // import { Token } from '../models/token.models';
 import { User } from '../models/createUser.models';
 import jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
+
 
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    token:any;
-    constructor(private http: HttpClient) { }
-    /***
-     * Get All User
-     */
-    getAll() {
 
-        return this.http.get<User[]>(`${environment.api}/user/all`);
+    token:any;
+
+    constructor(
+        private http: HttpClient,
+        private authService: AuthAuthenticationService
+    ){}
+
+
+    getAll(): Observable<any> {
+        
+        const tokenHeader = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+             'Authorization': `Bearer ${tokenHeader}`
+            })
+
+        return this.http.get<User[]>(`${environment.api}/user/all`, {'headers': headers});
     }
 
     createUser(user: User){

@@ -8,6 +8,7 @@ import { LockscreenComponent } from './lockscreen/lockscreen.component';
 import { ConfirmmailComponent } from './confirmmail/confirmmail.component';
 import { EmailverificationComponent } from './emailverification/emailverification.component';
 import { SteptwoverificationComponent } from './steptwoverification/steptwoverification.component';
+import { ChangePasswordComponent } from './changepassword/changepassword.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'two-step-verification',
     component: SteptwoverificationComponent,
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
   },
 ];
 

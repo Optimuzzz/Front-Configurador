@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { UserProfileService } from 'src/app/core/services/user.service';
+import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
 import { LAYOUT_MODE } from '../../../layouts/layouts.model';
 
 @Component({
@@ -30,7 +30,7 @@ export class SteptwoverificationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserProfileService
+    private authService: AuthAuthenticationService
   ){}
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class SteptwoverificationComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.userService.activeEmail(this.codigoForm.value)
+    this.authService.activeEmail(this.codigoForm.value)
       .pipe(first())
       .subscribe(
         (data: any) => {
