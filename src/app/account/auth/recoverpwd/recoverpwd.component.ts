@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
 import { LAYOUT_MODE } from '../../../layouts/layouts.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recoverpwd',
@@ -55,7 +56,8 @@ export class RecoverpwdComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data: any) => {
-          this.router.navigate(['']);
+          this.successmsg();
+          this.router.navigate(['account/login']);
         },
         (error: any) => {
           this.error = error ? error : '';
@@ -66,6 +68,10 @@ export class RecoverpwdComponent implements OnInit {
       );
 
     //this.router.navigate(['']);
+  }
+
+  successmsg() {
+    Swal.fire('Email de Recuperação enviado!', 'Você receberá uma mensagem com instruções para recuperar sua conta!', 'success');
   }
 
 }

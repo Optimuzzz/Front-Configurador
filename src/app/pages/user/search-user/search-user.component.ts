@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { User } from 'src/app/core/models/auth.models';
 import { UserService } from '../userService/userService';
+import Swal from 'sweetalert2';
+import { users } from '../../dashboards/data';
+
 
 @Component({
   selector: 'app-search-user',
@@ -11,8 +13,12 @@ import { UserService } from '../userService/userService';
 })
 export class SearchUserComponent implements OnInit {
   
-  users:User[] = [];
-  loadingUser: boolean = false;
+  users:any[] = [];
+  user: any = users;
+  breadCrumbItems!: Array<{}>;
+
+  messageError: any;
+  error: any;
   
   constructor(
     private userService: UserService,
@@ -20,21 +26,55 @@ export class SearchUserComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.loadingUser = true;
     this.userService.getAll()
-    .pipe(map(responserData => {
-      const usersArray = [];
-      for (const key in responserData) {
-        if (responserData.hasOwnProperty(key)) {
-          usersArray.push({...responserData[key], id: key});  
-        }
-      }
-      return usersArray;
-    }))
+    .pipe()
     .subscribe(
      userData =>{
-        this.loadingUser = false;
         this.users = userData;
     });
-    } 
+
+    this.breadCrumbItems = [
+      { label: 'Usuários' },
+      { label: 'Lista de Usuários', active: true }
+    ];
+    }
+
+    deleteId(id: any) {
+      this.userService.deleteId(id)
+      .pipe()
+      .subscribe(        
+        Data => {
+          if (Data){             
+          }
+        },
+        error => {
+          this.error = error ? error : '';
+          this.messageError = error.error.message;
+      })
+      this.ngOnInit();        
+    }
+
+    /**
+   * Confirm sweet alert
+   * @param delete modal content
+   */
+  delete(id:any) {
+    Swal.fire({
+      title: 'Excluir Usuário',
+      text: "Você não poderá reverter está ação",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#f46a6a',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.deleteId(id);
+        Swal.fire('Concluído!', 'Seu usuário foi excluído.', 'success');
+      }
+    });
+  }
+  
 }
+

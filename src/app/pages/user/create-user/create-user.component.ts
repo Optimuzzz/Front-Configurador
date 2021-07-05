@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models/createUser.models';
 import { UserService } from '../userService/userService';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-user',
@@ -17,7 +18,9 @@ export class CreateUserComponent implements OnInit {
   messageError: any;
   users: any = [];
   id:any;
-  textFilter:boolean = false;
+  btn:boolean = false;
+  termo:any = '';
+  breadCrumbItems!: Array<{}>;
 
 
   constructor(
@@ -33,7 +36,7 @@ export class CreateUserComponent implements OnInit {
     this.activatedRouter.paramMap.subscribe(params => {
       this.id = params.get('id');
       if (this.id) {
-        this.textFilter = true;
+        this.btn = true;
         this.getUser(this.id);
       }
     })
@@ -46,6 +49,11 @@ export class CreateUserComponent implements OnInit {
       id_tipo_usuario: ['', Validators.required],
       observacao: [null]
     })
+
+    this.breadCrumbItems = [
+      { label: 'Usuários' },
+      { label: 'Cadastro de Usuários', active: true }
+    ];
   }
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editUser(user: User) {
@@ -66,6 +74,9 @@ export class CreateUserComponent implements OnInit {
     );
   }
 
+
+  
+
   // get f() { return this.createUserForm.controls; }
 // CRIANDO NOVO USUARIO
   createUser() {   
@@ -74,6 +85,7 @@ export class CreateUserComponent implements OnInit {
       .subscribe(
         createUserData => {
           if (createUserData) {
+            this.concluded();
             this.router.navigate([`user/search-user`]);
           }
         },
@@ -92,6 +104,7 @@ export class CreateUserComponent implements OnInit {
     .subscribe(
       createUserData => {
         if (createUserData) {
+          this.concluded();
           this.router.navigate([`user/search-user`]);
         }
       },
@@ -101,16 +114,30 @@ export class CreateUserComponent implements OnInit {
     })
    }
 
-  
-
   onSubmit() {
     this.submitted = true;
+    
       if (this.id) {
-      this.updateUser(this.id);  
+      this.updateUser(this.id);
+       this.termo = "Editar";
+        
     } else {
         this.createUser();
+        this.termo = "Cadastrar";
     }
+
     
+    
+  }
+
+  concluded() {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Ação concluída com Sucesso!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
   }
 
 }

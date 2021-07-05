@@ -1,26 +1,42 @@
-<h2>Lista de Usuários</h2>
-<hr />
+<app-pagetitle title="Usuários" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
 
-<button class="btn btn-primary" [routerLink]="['/user/create-user']"   >Cadastrar Usuário</button>
-<table *ngIf="!loadingUser" class="table table-responsive table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Email</th>
-            <th scope="col"> - </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users; let i  = index">
-            <td scope="row">{{i + 1}}</td>
-            <td>{{user.nome}}</td>
-            <td>{{user.email}}</td>
-            <td>
-                <button class="btn btn-danger" [routerLink]="['/user/edit-user', user.id_usuario]" ><i class="mdi "></i></button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <h3 class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.03);">
+                Lista de Usuários</h3>
+            <div class="card-body">
 
-<p *ngIf="loadingUser">carregando...</p>
+                <button class="btn btn-primary" [routerLink]="['/user/create-user']">Cadastrar Usuário</button>
+                <table class="table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users; let i  = index">
+                            <td scope="row">{{i + 1}}</td>
+                            <td>{{user.nome}}</td>
+                            <td>{{user.email}}</td>
+                            <td>
+                                <button class="btn btn-outline-success"
+                                    [routerLink]="['/user/edit-user', user.id_usuario]" title="Atualizar">
+                                    <i class="bx bxs-edit"></i>
+                                </button>{{' '}}
+                                <button class="btn btn-outline-danger"
+                                 title="Excluir" (click)="delete(user.id_usuario)">
+                                    <i class=" bx bx-trash-alt"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
