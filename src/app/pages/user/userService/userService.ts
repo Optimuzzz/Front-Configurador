@@ -10,7 +10,10 @@ import jwt_decode from 'jwt-decode';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     token:any;
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        // private authService: AuthAuthenticationService        
+        ) { }
     /***
      * Get All User
      */
@@ -18,6 +21,14 @@ export class UserService {
 
         return this.http.get<User[]>(`${environment.api}/user/all`);
     }
+
+    // getAll() {
+    //     const token = this.authService.currentUserValue;
+    //     const header = new HttpHeaders({
+    //         'Authorization': `Bearer ${token}`
+    //     })
+    //     return this.http.get<User[]>(`${environment.api}/user/all`, {'headers': header});
+    // }
 
     createUser(user: User){
      
