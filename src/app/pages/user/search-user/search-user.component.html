@@ -1,13 +1,17 @@
 <app-pagetitle title="Usuários" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
 <div class="row">
     <div class="col-12">
-        <div class="card">
-
-            <h3 class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.03);">
-                Lista de Usuários</h3>
+        <div class="card">          
             <div class="card-body">
-
-                <button class="btn btn-primary" [routerLink]="['/user/create-user']">Cadastrar Usuário</button>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro">
+                    </div><!-- npm install w-ng5 --save ////instalar filtro de Pesquisa -->
+                    <div class="col">
+                        <button class="btn btn-primary float-end" [routerLink]="['/user/create-user']">Cadastrar Usuário</button>
+                    </div>
+                </div>
+               
                 <table class="table table-responsive table-hover">
                     <thead>
                         <tr>
@@ -18,16 +22,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of users; let i  = index">
+                        <tr *ngFor="let user of users | paginate: { itemsPerPage: 5, currentPage: paginaAtual } | 
+                        filter:[{field:'nome', value: filtro}, {field:'email', value: filtro}]; let i  = index">
                             <td scope="row">{{i + 1}}</td>
                             <td>{{user.nome}}</td>
                             <td>{{user.email}}</td>
                             <td>
-                                <button class="btn btn-outline-success"
+                                <button class="btn btn-light-success"
                                     [routerLink]="['/user/edit-user', user.id_usuario]" title="Atualizar">
                                     <i class="bx bxs-edit"></i>
                                 </button>{{' '}}
-                                <button class="btn btn-outline-danger"
+                                <button class="btn btn-light-danger"
                                  title="Excluir" (click)="delete(user.id_usuario)">
                                     <i class=" bx bx-trash-alt"></i>
                                 </button>
@@ -35,7 +40,10 @@
                             </td>
                         </tr>
                     </tbody>
+                    
                 </table>
+                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+                    <!-- https://backefront.com.br/criando-paginacao-tabela-angular/ -->
             </div>
         </div>
     </div>

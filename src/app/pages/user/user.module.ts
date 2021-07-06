@@ -6,6 +6,8 @@ import { UserRoutingModule } from './user-routing.modules';
 import { CommonModule } from "@angular/common";
 import { SharedModule } from 'src/app/shared/shared.module';
 // import { SweetalertComponent } from './search-user/search-user.componen
+import { PipesModule } from 'w-ng5';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    PipesModule,
+    NgxPaginationModule
   ]
+ 
 })
 export class UserModule { }

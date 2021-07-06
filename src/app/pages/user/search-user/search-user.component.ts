@@ -16,6 +16,8 @@ export class SearchUserComponent implements OnInit {
   users:any[] = [];
   user: any = users;
   breadCrumbItems!: Array<{}>;
+  public paginaAtual = 1;
+  
 
   messageError: any;
   error: any;
