@@ -55,5 +55,9 @@ export class UserService {
         return this.http.delete(`${environment.api}/user/${id}` );
     }
 
+    resetPassword(email: any){
+        return this.http.post(`${environment.api}/auth/reset-password`, {email});
+    }
+
 
 }

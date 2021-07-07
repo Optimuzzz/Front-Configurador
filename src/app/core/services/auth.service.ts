@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { User } from '../models/auth.models';
 import { environment } from 'src/environments/environment';
 import { ForgotPassword } from './forgotPassword';
+import { ResetPassword } from './resetPasword';
 
 
 @Injectable({ providedIn: 'root' })
@@ -80,5 +81,14 @@ export class AuthAuthenticationService {
 
     verifyToken(tokenConfirm: string) {
         return this.http.post<any>(`${environment.api}/auth/verify-token`, { tokenConfirm });
+    }
+
+   resetPassword(resetPassword: ResetPassword) {
+        let headers = new HttpHeaders({
+            'confirmEmailUrl': this.confirmEmailUrl
+        });
+        let options = { headers: headers };
+
+        return this.http.post<any>(`${environment.api}/auth/reset-password`, resetPassword, options);
     }
 }

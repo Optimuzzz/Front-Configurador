@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private authFackservice: AuthAuthenticationService,
+    private authService: AuthAuthenticationService,
   ){}
   
   ngOnInit(): void {
@@ -56,11 +56,18 @@ export class LoginComponent implements OnInit {
   onSubmit() {
       this.submitted = true;
 
-      this.authFackservice.login(this.f.email.value, this.f.password.value)
+      this.authService.login(this.f.email.value, this.f.password.value)
         .pipe(first())
         .subscribe(
           (data: any) => {
-            this.router.navigate(['']);
+            console.log(data);
+            if(data == false){
+              alert('teste');
+              this.router.navigate(['account/change-password']);
+            }else{
+              this.router.navigate(['']);
+            }
+            
           },
           (error: any) => {
             this.error = error ? error : '';

@@ -4,16 +4,18 @@
         <div class="card">          
             <div class="card-body">
                 <div class="row">
-                    <div class="col">
-                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro">
+                  
+                    <div class="col" >
+                        <h4 *ngIf="users == '' ">Sem registros para exibir.</h4>
+                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro" *ngIf="users != '' ">
                     </div><!-- npm install w-ng5 --save ////instalar filtro de Pesquisa -->
                     <div class="col">
                         <button class="btn btn-primary float-end" [routerLink]="['/user/create-user']">Cadastrar Usuário</button>
                     </div>
                 </div>
                
-                <table class="table table-responsive table-hover">
-                    <thead>
+                <table class="table table-responsive table-hover" *ngIf="users != '' ">
+                    <thead>{{flg}}
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nome</th>
@@ -28,13 +30,20 @@
                             <td>{{user.nome}}</td>
                             <td>{{user.email}}</td>
                             <td>
-                                <button class="btn btn-light-success"
-                                    [routerLink]="['/user/edit-user', user.id_usuario]" title="Atualizar">
-                                    <i class="bx bxs-edit"></i>
-                                </button>{{' '}}
+                                
+                                <button class="btn btn-light-danger"
+                                title="Excluir" [routerLink]="['/user/edit-user', user.id_usuario]">                                                
+                                    <i class=" bx bxs-edit"></i>
+                                </button>
+                                {{' '}}
                                 <button class="btn btn-light-danger"
                                  title="Excluir" (click)="delete(user.id_usuario)">
-                                    <i class=" bx bx-trash-alt"></i>
+                                    <i class="bx bxs-trash"></i>
+                                </button>
+                                {{' '}}
+                                <button class="btn btn-light-success"
+                                title="Resetar Senha" (click)="resetPassword(user.email)">
+                                    <i class="bx bx-link-external"></i>
                                 </button>
 
                             </td>
@@ -42,7 +51,7 @@
                     </tbody>
                     
                 </table>
-                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
+                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo" *ngIf="users != '' "></pagination-controls>
                     <!-- https://backefront.com.br/criando-paginacao-tabela-angular/ -->
             </div>
         </div>
