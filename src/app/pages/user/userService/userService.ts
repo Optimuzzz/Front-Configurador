@@ -59,5 +59,9 @@ export class UserService {
         return this.http.post(`${environment.api}/auth/reset-password`, {email});
     }
 
+    getUserAccount(id: any){
+        return this.http.get(`${environment.api}/userAccount/${id}` );
+    }
+    
 
 }

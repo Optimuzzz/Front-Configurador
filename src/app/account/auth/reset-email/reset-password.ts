@@ -7,52 +7,46 @@ import { LAYOUT_MODE } from '../../../layouts/layouts.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-recoverpwd',
-  templateUrl: './recoverpwd.component.html',
-  styleUrls: ['./recoverpwd.component.scss']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss']
 })
 
 /**
  * Recover-Password1 Component
  */
-export class RecoverpwdComponent implements OnInit {
+export class ResetpasswordComponent implements OnInit {
   layout_mode!: string;
 
   // set the currenr year
   year: number = new Date().getFullYear();
-  recoverForm!: FormGroup;
+ 
   submitted = false;
   error: any;
   messageError: string = '';
   btnText: string = 'Cadastrar';
   showSpinner = false;
+  id: any;
 
 
   constructor(
-    private formBuilder: FormBuilder,
+   
     private authService: AuthAuthenticationService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.layout_mode = LAYOUT_MODE
-    if (this.layout_mode === 'dark') {
-      document.body.setAttribute("data-layout-mode", "dark");
-    }
-    this.recoverForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
-    });
+   
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.recoverForm.controls; }
+ 
 
   onSubmit() {
     this.submitted = true;
     this.btnText = 'Enviando...';
     this.showSpinner = true;
 
-    this.authService.forgotPassword(this.recoverForm.value)
+    this.authService.resetPassword(this.id)
       .pipe(first())
       .subscribe(
         (data: any) => {
@@ -71,7 +65,7 @@ export class RecoverpwdComponent implements OnInit {
   }
 
   successmsg() {
-    Swal.fire('Email de Recuperação enviado!', 'Você receberá uma mensagem com instruções para recuperar sua conta!', 'success');
+    Swal.fire('Reset de senha Concluído!', 'O usuário receberá uma mensagem com instruções para resetar a senha', 'success');
   }
 
 }
