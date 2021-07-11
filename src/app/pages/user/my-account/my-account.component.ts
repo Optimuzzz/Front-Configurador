@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { User } from '../models/myAccount.models';
 
 
+
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
@@ -13,7 +14,7 @@ import { User } from '../models/myAccount.models';
 })
 export class MyAccountComponent implements OnInit {
 
-  createUserForm!: FormGroup;
+  myAccountForm!: FormGroup;
   submitted = false;
   error: any;
   messageError: any;
@@ -22,17 +23,24 @@ export class MyAccountComponent implements OnInit {
   btn:boolean = false;
   termo:any = '';
   breadCrumbItems!: Array<{}>;
+  model: any;
+ 
+  
 
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private activatedRouter: ActivatedRoute
+    private activatedRouter: ActivatedRoute,
+   
   ) { }
+ 
 
 
-  ngOnInit(): void {
+  
+
+ async ngOnInit() {
 // PEGANDO O PARAMETRO ID ATRAVÉS DA URL
     this.activatedRouter.paramMap.subscribe(params => {
       this.id = params.get('id');
@@ -42,12 +50,16 @@ export class MyAccountComponent implements OnInit {
       }
     })
 
-    this.createUserForm = this.formBuilder.group({
+ 
+
+    this.myAccountForm = this.formBuilder.group({
       nome: ['', Validators.required],
       email: ['', Validators.required],
       cpf_cnpj: ['', Validators.required],
       id_status: ['', Validators.required],
       id_tipo_usuario: ['', Validators.required],
+      telefone: ['', Validators.required],
+      nascimento: ['', Validators.required],
       observacao: [null]
     })
 
@@ -58,12 +70,14 @@ export class MyAccountComponent implements OnInit {
   }
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editUser(user: User) {
-    this.createUserForm.patchValue({
+    this.myAccountForm.patchValue({
       nome: user.nome,
       email: user.email,
       cpf_cnpj: user.cpf_cnpj,
       id_status: user.id_status,
       id_tipo_usuario: user.id_tipo_usuario,
+      telefone: user.telefone,
+      nascimento: user.nascimento,
       observacao: user.observacao
     });
   }
@@ -81,7 +95,7 @@ export class MyAccountComponent implements OnInit {
   // get f() { return this.createUserForm.controls; }
 // CRIANDO NOVO USUARIO
   createUser() {   
-    this.userService.createUser(this.createUserForm.value)
+    this.userService.createUser(this.myAccountForm.value)
       .pipe()
       .subscribe(
         createUserData => {
@@ -100,7 +114,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   updateUser(id:any) {
-    this.userService.updateUser(id, this.createUserForm.value)
+    this.userService.updateUser(id, this.myAccountForm.value)
     .pipe()
     .subscribe(
       createUserData => {

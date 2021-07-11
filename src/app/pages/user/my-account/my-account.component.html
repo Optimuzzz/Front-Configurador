@@ -2,10 +2,8 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="myAccountForm" (ngSubmit)="onSubmit()">
                 <div class="card-body">
-                    
-
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
@@ -31,7 +29,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-floating">
+                            <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="id_status"
                                     formControlName="id_status">
                                     <option value="" disabled selected>Selecione</option>
@@ -44,7 +42,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="form-floating">
+                            <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect2" name="id_tipo_usuario"
                                     formControlName="id_tipo_usuario">
                                     <option value="" disabled selected>Selecione</option>
@@ -55,12 +53,34 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-floating mb-3 mb-lg-0">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                    name="observacao" formControlName="observacao"></textarea>
-                                <label for="floatingTextarea">Observação</label>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control"  name="telefone" id="telefone" formControlName="telefone"
+                                    placeholder="Telefone">
+                                <label for="telefone">Telefone</label>
                             </div>
                         </div>
+                      
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">                               
+                                <input type="date" class="form-control" name="nascimento" formControlName="nascimento"
+                                    id="nascimento" placeholder="Nascimento">
+                                <label for="nascimento">Nascimento</label>                              
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-floating mb-3 ">
+                                <textarea class="form-control"  id="observacao"
+                                    name="observacao" formControlName="observacao"></textarea>
+                                <label for="observacao">Observação</label>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="text-end ">

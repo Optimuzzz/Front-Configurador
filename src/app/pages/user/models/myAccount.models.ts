@@ -7,4 +7,6 @@ export class User{
     id_tipo_usuario?:number;
     observacao?:string;
     id?:number;
+    telefone?: any;
+    nascimento?: any;
 }
