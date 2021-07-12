@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="nome" name="nome" id="floatingNome"
+                                <input type="text" class="form-control" formControlName="name" name="name" id="floatingNome"
                                     placeholder="Nome Completo">
                                 <label for="floatingNome">Nome</label>
                             </div>
@@ -41,17 +41,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect2" name="id_tipo_usuario"
-                                    formControlName="id_tipo_usuario">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="0">Usuário</option>
-                                </select>
-                                <label for="floatingSelect2">Nível de Usuário</label>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control"  name="telefone" id="telefone" formControlName="telefone"
@@ -59,15 +49,11 @@
                                 <label for="telefone">Telefone</label>
                             </div>
                         </div>
-                      
-                    </div>
-                    <div class="row">
-
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">                               
-                                <input type="date" class="form-control" name="nascimento" formControlName="nascimento"
-                                    id="nascimento" placeholder="Nascimento">
-                                <label for="nascimento">Nascimento</label>                              
+                                <input type="date" class="form-control" name="dt_nascimento" formControlName="dt_nascimento"
+                                    id="dt_nascimento" placeholder="Nascimento">
+                                <label for="dt_nascimento">Nascimento</label>                              
                             </div>
                         </div>
                     </div>
@@ -85,17 +71,61 @@
                 </div>
                 <div class="text-end ">
                     <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
-                        <button class="btn btn-warning w-md waves-effect waves-light" [routerLink]="['/auth/change-password']"  >
-                            Atualizar Senha</button> {{' '}}      
+                         
                         <button class="btn btn-secondary w-md waves-effect waves-light" [routerLink]="['/user/search-user']"  >
                             Voltar</button> {{' '}}                         
                         <button class="btn btn-primary w-md waves-effect waves-light" type="submit">
-                            {{btn ? 'Atualizar' : 'Cadastrar'}}</button>
+                            {{btn ? 'Atualizar' : 'Cadastrar'}}</button>{{' '}}
+                            <button type="button" class="btn btn-warning w-md waves-effect waves-light"
+                            (click)="largeModal(largeDataModal)">Atualizar Senha</button>
                     </div>
                 </div>
             </form>
         </div>
     </div> <!-- end col -->
+
+      <!--  Large modal example -->
+      <ng-template #largeDataModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0">Atualizar Senha</h5>
+            <button type="button" class="btn-close"
+                (click)="modal.dismiss('Cross click')"
+                aria-hidden="true"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="changeForm" (ngSubmit)="updatePassword(idProfile)">
+                <div class="mb-3">
+                    <label class="fw-semibold" for="password">Nova senha</label>
+                    <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                        placeholder="nova senha" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label class="fw-semibold" for="confirmPassword">Confirmar nova senha</label>
+                    <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword" name="confirmPassword"
+                        placeholder="Confirme sua senha" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }">
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                        </div>
+                </div>
+
+                <ul style="font-size: 12px; margin-top: 3px;">
+                    <li><strong> Sua senha deverá conter:</strong></li> 
+                    <li>Mínimo de oito caracteres</li>
+                    <li>pelo menos uma letra maiúscula</li>
+                    <li>uma letra minúscula</li>
+                    <li>um número e um caractere especial</li>  
+                </ul>
+
+                <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
+
+                <div class="mt-4 text-end">
+                    <button class="btn btn-primary w-md waves-effect waves-light"
+                        type="submit">Alterar Senha</button>
+                </div>
+            </form>
+        </div>
+    </ng-template>
 </div>
 
 

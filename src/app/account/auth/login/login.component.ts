@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           (data: any) => {
-            console.log(data);
             if(data == false){
               alert('teste');
               this.router.navigate(['account/change-password']);
@@ -74,8 +73,6 @@ export class LoginComponent implements OnInit {
             this.messageError = error.error.message;
             }
           );
-
-        //this.router.navigate(['']);
   }
 
 }

@@ -6,6 +6,7 @@ import { User } from '../models/auth.models';
 import { environment } from 'src/environments/environment';
 import { ForgotPassword } from './forgotPassword';
 import { ResetPassword } from './resetPasword';
+import { Router } from '@angular/router';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +17,10 @@ export class AuthAuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private router: Router
+        ) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('token')!));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -56,8 +60,10 @@ export class AuthAuthenticationService {
      */
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null!);
+        localStorage.removeItem('token');
+        localStorage.clear();
+        this.router.navigate(['/account/login']);
+        
     }
 
     activeEmail(user: User){
@@ -75,7 +81,7 @@ export class AuthAuthenticationService {
     }
 
     changePassword(id: number, password: string){
-        console.log(id, password)
+       // console.log(id, password)
         return this.http.post<any>(`${environment.api}/auth/change-password`, {id, password});
     }
 

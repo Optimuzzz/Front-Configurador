@@ -99,8 +99,8 @@ export class SearchUserComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#34c38f',
       cancelButtonColor: '#f46a6a',
-      confirmButtonText: 'Sim, excluir',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não'
     }).then((result) => {
       if (result.value) {
         this.resetPw(email);

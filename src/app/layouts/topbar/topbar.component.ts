@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { environment } from '../../../environments/environment';
 import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -24,12 +25,14 @@ export class TopbarComponent implements OnInit {
   cookieValue: any;
   countryName: any;
   valueset: any;
+  decoded: any;
+  idProfile: number = 0;
 
   constructor(@Inject(DOCUMENT) private document: any,
     private router: Router,
     public languageService: LanguageService,
     public _cookiesService: CookieService,
-    private authFackservice: AuthAuthenticationService
+    private authService: AuthAuthenticationService
   ) { }
 
   /***
@@ -58,6 +61,12 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+    const idToken:any = localStorage.getItem('token');
+
+    this.decoded = jwt_decode(idToken);
+    this.idProfile = this.decoded.id;
+   // console.log(this.decoded);
+    //this.getId();
   }
 
   /***
@@ -125,9 +134,10 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    localStorage.removeItem('token');
-    localStorage.clear();
-    this.router.navigate(['/account/login']);
+    this.authService.logout();
   }
 
+
+  
 }
+
