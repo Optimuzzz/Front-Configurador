@@ -66,7 +66,7 @@ export class TopbarComponent implements OnInit {
 
     this.decoded = jwt_decode(idToken);
     this.idProfile = this.decoded.id;
-    this.nameProfile = 'Paulo Ricardo da Silva Pontes';
+    this.nameProfile = this.decoded.name;
 
    //console.log(this.decoded);
     //this.getId();

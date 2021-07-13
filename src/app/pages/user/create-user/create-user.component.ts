@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models/createUser.models';
 import { UserService } from '../userService/userService';
 import Swal from 'sweetalert2';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-user',
@@ -42,8 +43,10 @@ export class CreateUserComponent implements OnInit {
     })
 
     this.createUserForm = this.formBuilder.group({
-      nome: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', Validators.required],
+      login: ['', Validators.required],
+      password: ['', Validators.required],
       cpf_cnpj: ['', Validators.required],
       id_status: ['', Validators.required],
       id_tipo_usuario: ['', Validators.required],
@@ -58,8 +61,10 @@ export class CreateUserComponent implements OnInit {
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editUser(user: User) {
     this.createUserForm.patchValue({
-      nome: user.nome,
+      name: user.name,
       email: user.email,
+      login: user.login,
+      password: user.password,
       cpf_cnpj: user.cpf_cnpj,
       id_status: user.id_status,
       id_tipo_usuario: user.id_tipo_usuario,
@@ -79,23 +84,22 @@ export class CreateUserComponent implements OnInit {
 
   // get f() { return this.createUserForm.controls; }
 // CRIANDO NOVO USUARIO
-  createUser() {   
-    this.userService.createUser(this.createUserForm.value)
-      .pipe()
+async createUser() {  
+    (await this.userService.createUser(this.createUserForm.value))
+      .pipe(first())
       .subscribe(
-        createUserData => {
-          if (createUserData) {
-            this.concluded();
+        ([data, data2]) => {
+          console.log(data, data2)
+          // this.successmsg = true;
+          this.concluded();
             this.router.navigate([`user/search-user`]);
-          }
         },
-        error => {
+        (error: any) => {
           this.error = error ? error : '';
           this.messageError = error.error.message;
-
-
-        }
-      )
+          // this.btnText = 'Cadastrar';
+          // this.showSpinner = false;
+        });
   }
 
   updateUser(id:any) {

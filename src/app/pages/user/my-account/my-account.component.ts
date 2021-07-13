@@ -30,6 +30,7 @@ export class MyAccountComponent implements OnInit {
   model: any; 
   decoded: any;
   idProfile: any;
+  nameProfile: string = '';
   
 
 
@@ -54,6 +55,7 @@ export class MyAccountComponent implements OnInit {
       const idToken:any = localStorage.getItem('token');
       this.decoded = jwt_decode(idToken);
       this.idProfile = this.decoded.id;
+      this.nameProfile = this.decoded.name
 
     })
 

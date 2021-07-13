@@ -1,4 +1,15 @@
 <app-pagetitle title="Minha Conta" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="container-fuild">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div style=" background-color: #00FFFF; text-align: center; font-size: 2rem;">
+                <img src="assets/images/Profile.png" alt="Avatar" class="avatar">
+                <p>{{nameProfile}}</p>
+            </div>
+        </div>
+    </div>   
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -86,6 +97,7 @@
             </form>
         </div>
     </div> <!-- end col -->
+</div>
 
       <!--  Large modal example -->
       <ng-template #largeDataModal let-modal>
@@ -130,6 +142,7 @@
         </div>
     </ng-template>
 </div>
+
 
 
 

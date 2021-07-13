@@ -5,6 +5,7 @@ import { User } from '../models/createUser.models';
 import jwt_decode from 'jwt-decode';
 import { MyAccount } from '../models/myAccount.models';
 import { UpdatePassword } from '../models/updatePassword.models';
+import { forkJoin } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
@@ -30,11 +31,18 @@ export class UserService {
     // }
 
     createUser(user: User){
+
+        console.log(user);
      
         this.token = localStorage.getItem('token');
         const decoded: any = jwt_decode(this.token);
         user.id_login_insert = decoded.id;
-        return this.http.post<User>(`${environment.api}/user/create`, user);    
+
+        const insertUser = this.http.post<User>(`${environment.api}/user/create`, user); 
+        const insertLogin = this.http.post<any>(`${environment.api}/auth/signup`, user);
+
+        return forkJoin([insertUser, insertLogin])
+       
     }
 
     getId(id: any){
