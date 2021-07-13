@@ -151,8 +151,9 @@ export class MyAccountComponent implements OnInit {
    * @param largeDataModal large modal data
    */
    largeModal(largeDataModal: any) {
+    this.messageError = '';
     this.changeForm.reset(); 
-    this.modalService.open(largeDataModal, { size: 'lg', windowClass: 'modal-holder', centered: true });
+    this.modalService.open(largeDataModal, { size: 'lg', windowClass: 'modal-holder', centered: true, keyboard: false,  backdrop: 'static' });
   }
 
   updatePassword() {

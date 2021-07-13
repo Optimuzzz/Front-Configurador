@@ -58,13 +58,15 @@ export class AuthAuthenticationService {
     /**
      * Logout the user
      */
-    logout() {
+     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('token');
         localStorage.clear();
         this.router.navigate(['/account/login']);
+        this.currentUserSubject.next(null!);
         
     }
+
 
     activeEmail(user: User){
         const { token } = user;

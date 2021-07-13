@@ -104,7 +104,7 @@ export class SearchUserComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.resetPw(email);
-        Swal.fire('Concluído!', 'Senha resetada com sucesso.', 'success');
+        Swal.fire('Concluído!', 'Um email com instruções foi enviado ao usuário!', 'success');
       }
     });
   }
