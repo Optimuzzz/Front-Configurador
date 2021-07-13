@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthAuthenticationService } from 'src/app/core/services/auth.service';
+import Swal from 'sweetalert2';
 
 import { LAYOUT_MODE } from '../../../layouts/layouts.model';
 
@@ -61,8 +62,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (data: any) => {
             if(data == false){
-              alert('teste');
-              this.router.navigate(['account/change-password']);
+				Swal.fire('Sua Senha foi Resetada! Verifique sua caixa de Email e siga as instruções');	       
             }else{
               this.router.navigate(['']);
             }

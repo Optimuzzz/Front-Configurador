@@ -27,6 +27,7 @@ export class TopbarComponent implements OnInit {
   valueset: any;
   decoded: any;
   idProfile: number = 0;
+  nameProfile: any;
 
   constructor(@Inject(DOCUMENT) private document: any,
     private router: Router,
@@ -65,7 +66,9 @@ export class TopbarComponent implements OnInit {
 
     this.decoded = jwt_decode(idToken);
     this.idProfile = this.decoded.id;
-   // console.log(this.decoded);
+    this.nameProfile = 'Paulo Ricardo da Silva Pontes';
+
+   //console.log(this.decoded);
     //this.getId();
   }
 

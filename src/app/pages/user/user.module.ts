@@ -7,14 +7,12 @@ import { CommonModule } from "@angular/common";
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PipesModule } from 'w-ng5';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { RecoverpwdComponent } from 'src/app/account/auth/recoverpwd/recoverpwd.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 
 @NgModule({
   declarations: [
     SearchUserComponent,
     CreateUserComponent,
-    RecoverpwdComponent,
     MyAccountComponent
   ],
   imports: [

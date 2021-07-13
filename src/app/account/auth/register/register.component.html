@@ -24,7 +24,7 @@
                                         <div class="mb-3">
                                             <label class="fw-semibold" for="useremail">Email</label>
                                             <input type="email" formControlName="email" class="form-control"
-                                                id="useremail" placeholder="Enter email"
+                                                id="useremail" placeholder="Digite o email"
                                                 [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                                             <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                                                 <div *ngIf="f.email.errors.required">Email é obrigatório</div>
@@ -36,7 +36,7 @@
                                         <div class="mb-3">
                                             <label class="fw-semibold" for="username">Usuário</label>
                                             <input type="text" formControlName="username" class="form-control"
-                                                id="username" placeholder="Enter username"
+                                                id="username" placeholder="Digite seu nome"
                                                 [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
                                             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                                                 <div *ngIf="f.username.errors.required">Usuário é obrigatório</div>
@@ -56,7 +56,7 @@
                                         <div class="mb-3">
                                             <label class="fw-semibold" for="userpassword">Senha</label>
                                             <input type="password" formControlName="password" class="form-control"
-                                                id="userpassword" placeholder="Enter password"
+                                                id="userpassword" placeholder="Digite a senha"
                                                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                                             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                                 <div *ngIf="f.password.errors.required">Senha é obrigatório</div>

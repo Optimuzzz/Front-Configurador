@@ -68,6 +68,9 @@
                         </div>
                         
                     </div>
+                    <div class="row">
+                        <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
+                    </div>
                 </div>
                 <div class="text-end ">
                     <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">

@@ -12,7 +12,7 @@ export class UserProfileService {
     }
 
     register(user: User) {
-        console.log( user );
+       // console.log( user );
         return this.http.post<any>(`${environment.api}/auth/signup`, user);
     }
 
