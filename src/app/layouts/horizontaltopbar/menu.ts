@@ -9,9 +9,9 @@ export const MENU: MenuItem[] = [
     },
     {
         id: 2,
-        label: 'Modelo',
+        label: 'Fabricante',
         icon: 'mdi mdi-alarm-panel',
-        link: '/',
+        link: '/create-fabricante',
 
     },
     // {

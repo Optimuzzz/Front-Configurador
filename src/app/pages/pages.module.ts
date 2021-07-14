@@ -15,6 +15,7 @@ import { WidgetModule } from '../shared/widget/widget.module';
 
 
 import { SharedModule } from '../shared/shared.module';
+import { RastreadorModule } from './rastreador/rastreador.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SharedModule } from '../shared/shared.module';
     NgbTooltipModule,
     NgbPopoverModule,
     CountToModule,
+    RastreadorModule,
   
  
     SharedModule,
