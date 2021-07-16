@@ -1,0 +1,136 @@
+<app-pagetitle title="Modelo" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <form [formGroup]="modeloForm" (ngSubmit)="onSubmit()">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="id_fabricante"                                 
+                                    formControlName="id_fabricante">
+                                    <option  value="" disabled selected>Selecione</option>
+                                    <option *ngFor="let fabricante of fabricantes" value="{{fabricante.id_fabricante}}">{{fabricante.fabricante}}</option>                                    
+                                </select>
+                                <label for="floatingSelect">Fabricante</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="modelo" name="modelo" id="floatingNome"
+                                    placeholder="Modelo">
+                                <label for="floatingNome">Modelo</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="id_status"
+                                    formControlName="id_status">
+                                    <option value="" disabled selected>Selecione</option>
+                                    <option value="1">Ativo</option>
+                                    <option value="0">Inativo</option>
+                                </select>
+                                <label for="floatingSelect">Status</label>
+                            </div>
+                        </div>
+                                   
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3 mb-lg-0">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                    name="observacao" formControlName="observacao"></textarea>
+                                <label for="floatingTextarea">Observação</label>
+                            </div>
+                        </div>                       
+                    </div><br>
+                     <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
+                </div>
+                <div class="text-end ">
+                    <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
+                        <button class="btn btn-secondary w-md waves-effect waves-light" [routerLink]="['/search-modelo']"  >
+                            Voltar</button> {{' '}}                           
+                        <button class="btn btn-primary w-md waves-effect waves-light" type="submit">
+                            {{btn ? 'Atualizar' : 'Cadastrar'}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+
+
+
+<!-- 
+
+<div class="container-fluid">
+   
+    <h2>{{btn ? 'Atualizar' : 'Cadastrar'}} Usuário</h2>
+
+    <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+        <div class="form-group ">
+            <div class="row">
+                <div class="group col-md-6 col-sm-12 col-xs-12">
+                    <input type="text" formControlName="nome" name="nome" id="nome">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Nome</label>
+                </div>
+
+                <div class="group col-md-6 col-sm-12 col-xs-12">
+                    <input type="email" formControlName="email" name="email" id="email">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Email</label>
+                </div>
+                <div class="group col-md-6 col-sm-12 col-xs-12">
+                    <input type="text" formControlName="cpf_cnpj"  name="cpf_cnpj" id="cpf_cnpj">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Cpf - Cnpj</label>
+                </div>
+                <div class="group  col-md-6 col-sm-12 col-xs-12">
+                    <div class="wrap">
+                        <div class="select">
+                            <select class="select-text" name="id_status" formControlName="id_status" id="id_status">
+                                <option value="" disabled selected></option>
+                                <option value="1">Ativo</option>
+                                <option value="0">Inativo</option>
+                            </select>
+                            <span class="select-highlight"></span>
+                            <span class="select-bar"></span>
+                            <label class="select-label">Status </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="group  col-md-6 col-sm-12 col-xs-12">
+                    <div class="wrap">
+                        <div class="select">
+                            <select class="select-text" name="id_tipo_usuario" formControlName="id_tipo_usuario" id="id_tipo_usuario">
+                                <option value="" disabled selected></option>
+                                <option value="1">Administrador</option>
+                                <option value="0">Usuário</option>
+                            </select>
+                            <span class="select-highlight"></span>
+                            <span class="select-bar"></span>
+                            <label class="select-label">Nível Usuário</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="group col-md-12 col-sm-12 col-xs-12">
+                    <input type="text" name="observacao" id="observacao" formControlName="observacao">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Observação</label>
+                </div>
+             
+                <div class="col-12">
+                    <div class="text-end p-4">
+                        <button class="btn btn-primary w-md waves-effect waves-light"  type="submit">{{btn ? 'Atualizar' : 'Cadastrar'}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div> -->

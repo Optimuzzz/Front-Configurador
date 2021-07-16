@@ -1,0 +1,53 @@
+<app-pagetitle title="Fabricantes" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="row">
+    <div class="col-12">
+        <div class="card">          
+            <div class="card-body">
+                <div class="row">
+                  
+                    <div class="col" >
+                        <h4 *ngIf="fabricantes == '' ">Sem registros para exibir.</h4>
+                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro" *ngIf="fabricantes != '' ">
+                    </div><!-- npm install w-ng5 --save ////instalar filtro de Pesquisa -->
+                    <div class="col">
+                        <button class="btn btn-primary float-end" [routerLink]="['/create-fabricante']">Cadastrar Fabricante</button>
+                    </div>
+                </div>
+               
+                <table class="table table-responsive table-hover" *ngIf="fabricantes != '' ">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Fabricante</th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fabricante of fabricantes | paginate: { itemsPerPage: 5, currentPage: paginaAtual } | 
+                        filter:[{field:'fabricante', value: filtro}]; let i  = index">
+                            <td scope="row">{{i + 1}}</td>
+                            <td>{{fabricante.fabricante}}</td>
+                      
+                            <td>
+                                
+                                <button class="btn btn-light-danger"
+                                title="Editar" [routerLink]="['/edit-fabricante', fabricante.id_fabricante]">                                                
+                                    <i class=" bx bxs-edit"></i>
+                                </button>
+                                {{' '}}
+                                <button class="btn btn-light-danger"
+                                 title="Excluir" (click)="delete(fabricante.id_fabricante)">
+                                    <i class="bx bxs-trash"></i>
+                                </button>                               
+
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo" *ngIf="fabricantes != '' "></pagination-controls>
+                    <!-- https://backefront.com.br/criando-paginacao-tabela-angular/ -->
+            </div>
+        </div>
+    </div>
+</div>
