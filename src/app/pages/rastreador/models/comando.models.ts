@@ -3,9 +3,10 @@ export class Comando {
     comando?: string;
     id_status?:number;
     observacao?: string;
-    id_modelo?: string;
-    id_tipo_comando?: string;
+    tipo_comando?: any;
     id_login_insert?:number;
-    id_login_update?:number;  
+    id_login_update?:number; 
+    modelo?: any;
+
    
 }

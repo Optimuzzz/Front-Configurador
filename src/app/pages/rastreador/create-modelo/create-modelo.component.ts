@@ -63,10 +63,8 @@ export class ModeloComponent implements OnInit {
     .pipe()
     .subscribe(
      Data =>{
-        this.fabricantes = Data;
-       
+        this.fabricantes = Data;       
     });
-
   }
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editModelo(modelo: Modelo) {
@@ -77,14 +75,15 @@ export class ModeloComponent implements OnInit {
       id_status: modelo.id_status,
       observacao: modelo.observacao
     });
-   
+   console.log(modelo);
   }
 //PEGANDO OS DADOS DO modelo NA API ATRAVES DO ID
-  getModelo(id: any) {
+  getModelo(id: any) {    
     this.rastreadorService.getIdModelo(id).subscribe(
-      (modelo: Modelo) => this.editModelo(modelo),
+      (modelo: Modelo) => this.editModelo(modelo),      
       (error: any) => console.log(error)
     );
+ 
   }  
 
   get f() { return this.modeloForm.controls; }

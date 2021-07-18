@@ -27,6 +27,12 @@
                         filter:[{field:'fabricante', value: filtro}]; let i  = index">
                             <td scope="row">{{i + 1}}</td>
                             <td>{{fabricante.fabricante}}</td>
+                            <td *ngIf="fabricante.id_status == 0">
+                                <h5 class="text-center"><span class="badge bg-warning"> Inativo </span></h5>
+                            </td>
+                            <td *ngIf="fabricante.id_status == 1">
+                                <h5 class="text-center"><span class="badge bg-success"> Ativo </span></h5>
+                            </td>
                       
                             <td>
                                 

@@ -16,7 +16,7 @@ export class SearchTipoComandoComponent implements OnInit {
 
   breadCrumbItems!: Array<{}>;
   public paginaAtual = 1;
-  public numSelect = 2;
+  public numSelect = 5;
   messageError: any;
   error: any;
   flg: any; 

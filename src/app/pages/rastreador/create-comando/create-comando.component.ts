@@ -18,12 +18,13 @@ export class ComandoComponent implements OnInit {
   submitted = false;
   error: any;
   messageError: any = '';
-  comandos: any = [];
+  tipo_comandos: any = [];
   id:any;
   btn:boolean = false;
   breadCrumbItems!: Array<{}>;    
-  id_comando: any;
- 
+  id_tipo_comando: any;
+  id_modelo: any;
+  modelos: any = [];
   
   constructor(
     private formBuilder: FormBuilder,    
@@ -47,7 +48,9 @@ export class ComandoComponent implements OnInit {
     this.comandoForm = this.formBuilder.group({
       id_comando: ['', Validators.required], 
       comando: ['', Validators.required],
-      id_status: ['', Validators.required],     
+      id_status: ['', Validators.required], 
+      id_modelo: ['', Validators.required],
+      id_tipo_comando: ['', Validators.required],    
       observacao: [null]
     })
 
@@ -56,11 +59,19 @@ export class ComandoComponent implements OnInit {
       { label: 'Cadastro de Comando', active: true }
     ];
 
-    this.rastreadorService.getAllComando()
+    this.rastreadorService.getAllTipoComando()
     .pipe()
     .subscribe(
      Data =>{
-        this.comandos = Data;
+        this.tipo_comandos = Data;
+       
+    });
+
+    this.rastreadorService.getAllModelo()
+    .pipe()
+    .subscribe(
+     Data =>{
+        this.modelos = Data;
        
     });
 
@@ -72,9 +83,10 @@ export class ComandoComponent implements OnInit {
       id_comando: comando.id_comando,
       comando: comando.comando,
       id_status: comando.id_status,
-      observacao: comando.observacao
+      observacao: comando.observacao,
+      id_tipo_comando: comando.tipo_comando.id_tipo_comando,
+      id_modelo: comando.modelo.id_modelo
     });
-   
   }
 //PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
   getComando(id: any) {

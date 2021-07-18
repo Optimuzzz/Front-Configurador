@@ -45,7 +45,7 @@ export class CreateUserComponent implements OnInit {
     this.createUserForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
-      login: ['', Validators.required],
+      // login: ['', Validators.required],
       password: ['', Validators.required],
       cpf_cnpj: ['', Validators.required],
       id_status: ['', Validators.required],
@@ -63,13 +63,14 @@ export class CreateUserComponent implements OnInit {
     this.createUserForm.patchValue({
       name: user.name,
       email: user.email,
-      login: user.login,
+      // login: user.login,
       password: user.password,
       cpf_cnpj: user.cpf_cnpj,
       id_status: user.id_status,
       id_tipo_usuario: user.id_tipo_usuario,
       observacao: user.observacao
     });
+  
   }
 // PEGANDO OS DADOS DO USUARIO NA API ATRAVES DO ID
   getUser(id: any) {

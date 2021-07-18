@@ -11,7 +11,29 @@
                                     name="comando" id="floatingNome" placeholder="Comando">
                                 <label for="floatingNome">Comando</label>
                             </div>
-                        </div>                   
+                        </div>  
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="id_fabricante"                                 
+                                    formControlName="id_tipo_comando">
+                                    <option  value="" disabled selected>Selecione</option>
+                                    <option *ngFor="let tipo_comando of tipo_comandos" value="{{tipo_comando.id_tipo_comando}}">{{tipo_comando.tipo_comando}}</option>                                    
+                                </select>
+                                <label for="floatingSelect">Tipo de comando</label>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row">   
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="id_fabricante"                                 
+                                    formControlName="id_modelo">
+                                    <option  value="" disabled selected>Selecione</option>
+                                    <option *ngFor="let modelo of modelos" value="{{modelo.id_modelo}}">{{modelo.modelo}}</option>                                    
+                                </select>
+                                <label for="floatingSelect">Modelo</label>
+                            </div>
+                        </div>             
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="id_status"
