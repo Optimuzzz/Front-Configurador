@@ -45,14 +45,15 @@ export class SearchUserComponent implements OnInit {
       .pipe()
       .subscribe(        
         Data => {
-          if (Data){             
+          if (Data){      
+            this.ngOnInit();       
           }
         },
         error => {
           this.error = error ? error : '';
           this.messageError = error.error.message;
       })
-      this.ngOnInit();        
+             
     }
 
     resetPw(email: any) {

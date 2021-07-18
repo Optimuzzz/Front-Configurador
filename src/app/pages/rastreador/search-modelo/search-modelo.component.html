@@ -1,0 +1,71 @@
+<app-pagetitle title="Modelos" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col">
+                        <h4 *ngIf="modelos == '' ">Sem registros para exibir.</h4>
+                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro"
+                            *ngIf="modelos != '' ">
+                    </div>
+                    <div class="col">
+                        <select class="form-select" id="floatingSelect" name="id_status" style="width: 60px;"
+                            [(ngModel)]="numSelect">
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
+
+                    </div><!-- npm install w-ng5 --save ////instalar filtro de Pesquisa -->
+                    <div class="col">
+                        <button class="btn btn-primary float-end" [routerLink]="['/create-modelo']">Cadastrar
+                            Modelo</button>
+                    </div>
+                </div>
+
+                <table class="table table-responsive table-hover" *ngIf="modelos != '' ">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="text-center">Modelos</th>
+                            <th scope="col" class="text-center">Fabricantes</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let modelo of modelos | paginate: { itemsPerPage: numSelect, currentPage: paginaAtual } | 
+                            filter:[{field:'modelo', value: filtro}]; let i  = index">
+                            <td scope="row">{{i + 1}}</td>
+                            <td class="text-center">{{modelo.modelo}}</td>
+                            <td class="text-center">{{modelo.fabricante.fabricante}}</td>
+
+                            <td *ngIf="modelo.id_status == 0">
+                                <h5 class="text-center"><span class="badge bg-warning"> Inativo </span></h5>
+                            </td>
+                            <td *ngIf="modelo.id_status == 1">
+                                <h5 class="text-center"><span class="badge bg-success"> Ativo </span></h5>
+                            </td>
+                            <td>
+                                <button class="btn btn-light-danger" title="Editar"
+                                    [routerLink]="['/edit-modelo', modelo.id_modelo]">
+                                    <i class=" bx bxs-edit"></i>
+                                </button>
+                                {{' '}}
+                                <button class="btn btn-light-danger" title="Excluir" (click)="delete(modelo.id_modelo)">
+                                    <i class="bx bxs-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+                    *ngIf="modelos != '' "></pagination-controls>
+                <!-- https://backefront.com.br/criando-paginacao-tabela-angular/ -->
+            </div>
+        </div>
+    </div>
+</div>

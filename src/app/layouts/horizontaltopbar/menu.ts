@@ -18,9 +18,46 @@ export const MENU: MenuItem[] = [
         id: 3,
         label: 'Modelo',
         icon: 'mdi mdi-alarm-panel',
-        link: '/create-modelo',
+        link: '/search-modelo',
 
     },
+    {
+        id: 4,
+        label: 'Comando',
+        icon: 'mdi mdi-alarm-panel',
+        subItems: [
+            {
+                id: 5,
+                label: 'Pesquisar Tipo de Comando',
+                link: 'search-tipo-comando',
+               
+           
+            },
+            {
+                id: 6,
+                label: 'Cadastro Tipo de Comando',
+                link: '/create-tipo-comando',
+             
+                
+            },
+            {
+                id: 7,
+                label: 'Pesquisar Comando',
+                link: '/search-comando',
+             
+                
+            },
+            {
+                id: 8,
+                label: 'Cadastro de Comando',
+                link: '/create-comando',
+             
+                
+            },
+        ]
+    },
+
+
     // {
     //     id: 3,
     //     label: 'MENUITEMS.ADVANCEDKIT.TEXT',

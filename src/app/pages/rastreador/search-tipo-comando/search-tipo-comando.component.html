@@ -1,0 +1,68 @@
+<app-pagetitle title="Tipo de Comandos" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row g-3">
+
+                    <div class="col">
+                        <h4 *ngIf="tipo_comandos == '' ">Sem registros para exibir.</h4>
+                        <input type="text" placeholder="Pesquisa..." class="form-control" [(ngModel)]="filtro"
+                            *ngIf="tipo_comandos != '' ">
+                    </div>
+                    <div class="col"  *ngIf="tipo_comandos != '' ">
+                        <select class="form-select" id="floatingSelect" name="id_status" style="width: 60px;"
+                            [(ngModel)]="numSelect"   *ngIf="tipo_comandos != '' ">
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
+
+                    </div><!-- npm install w-ng5 --save ////instalar filtro de Pesquisa -->
+                    <div class="col">
+                        <button class="btn btn-primary float-end" [routerLink]="['/create-tipo-comando']">Cadastrar
+                            Tipo de Comando</button>
+                    </div>
+                </div>
+
+                <table class="table table-responsive table-hover" *ngIf="tipo_comandos != '' ">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="text-center">Tipo de Comandos</th>
+                            <th scope="col" class="text-center">Status</th>
+                            <th scope="col" class="text-center"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tipo_comando of tipo_comandos | paginate: { itemsPerPage: numSelect, currentPage: paginaAtual } | 
+                            filter:[{field:'tipo_comando', value: filtro}]; let i  = index">
+                            <td scope="row">{{i + 1}}</td>
+                            <td class="text-center">{{tipo_comando.tipo_comando}}</td>
+                            <td *ngIf="tipo_comando.id_status == 0">
+                                <h5 class="text-center"><span class="badge bg-warning"> Inativo </span></h5>
+                            </td>
+                            <td *ngIf="tipo_comando.id_status == 1">
+                                <h5 class="text-center"><span class="badge bg-success"> Ativo </span></h5>
+                            </td>
+                            <td>
+                                <button class="btn btn-light-danger" title="Editar"
+                                    [routerLink]="['/edit-tipo-comando', tipo_comando.id_tipo_comando]">
+                                    <i class=" bx bxs-edit"></i>
+                                </button>
+                                {{' '}}
+                                <button class="btn btn-light-danger" title="Excluir" (click)="delete(tipo_comando.id_tipo_comando)">
+                                    <i class="bx bxs-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"
+                    *ngIf="tipo_comandos != '' "></pagination-controls>
+                <!-- https://backefront.com.br/criando-paginacao-tabela-angular/ -->
+            </div>
+        </div>
+    </div>
+</div>

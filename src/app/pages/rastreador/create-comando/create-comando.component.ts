@@ -3,30 +3,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { first } from 'rxjs/operators';
-
-import { Modelo } from '../models/modelo.models';
 import { RastreadorService } from '../rastreadorService/rastreadorService';
-
+import { Comando } from '../models/comando.models';
 
 
 @Component({
-  selector: 'app-create-modelo',
-  templateUrl: './create-modelo.component.html',
-  styleUrls: ['./create-modelo.component.scss']
+  selector: 'app-create-comando',
+  templateUrl: './create-comando.component.html',
+ // styleUrls: ['./create-comando.component.scss']
 })
-export class ModeloComponent implements OnInit {
+export class ComandoComponent implements OnInit {
 
-  modeloForm!: FormGroup;
+  comandoForm!: FormGroup;
   submitted = false;
   error: any;
   messageError: any = '';
-  modelos: any = [];
+  comandos: any = [];
   id:any;
   btn:boolean = false;
   breadCrumbItems!: Array<{}>;    
-  id_fabricante: any;
-  fabricantes:  any = [];
-
+  id_comando: any;
+ 
   
   constructor(
     private formBuilder: FormBuilder,    
@@ -43,60 +40,60 @@ export class ModeloComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         this.btn = true;
-        this.getModelo(this.id);
+        this.getComando(this.id);
       }
     })
 
-    this.modeloForm = this.formBuilder.group({
-      id_fabricante: ['', Validators.required], 
-      modelo: ['', Validators.required],
+    this.comandoForm = this.formBuilder.group({
+      id_comando: ['', Validators.required], 
+      comando: ['', Validators.required],
       id_status: ['', Validators.required],     
       observacao: [null]
     })
 
     this.breadCrumbItems = [
-      { label: 'Modelo' },
-      { label: 'Cadastro de Modelo', active: true }
+      { label: 'Comando' },
+      { label: 'Cadastro de Comando', active: true }
     ];
 
-    this.rastreadorService.getAllFabricante()
+    this.rastreadorService.getAllComando()
     .pipe()
     .subscribe(
      Data =>{
-        this.fabricantes = Data;
+        this.comandos = Data;
        
     });
 
   }
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
-  editModelo(modelo: Modelo) {
-    //console.log(modelo.fabricante)
-    this.modeloForm.patchValue({
-      id_fabricante: modelo.fabricante.id_fabricante,
-      modelo: modelo.modelo,
-      id_status: modelo.id_status,
-      observacao: modelo.observacao
+  editComando(comando: Comando) {
+    
+    this.comandoForm.patchValue({
+      id_comando: comando.id_comando,
+      comando: comando.comando,
+      id_status: comando.id_status,
+      observacao: comando.observacao
     });
    
   }
-//PEGANDO OS DADOS DO modelo NA API ATRAVES DO ID
-  getModelo(id: any) {
-    this.rastreadorService.getIdModelo(id).subscribe(
-      (modelo: Modelo) => this.editModelo(modelo),
+//PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
+  getComando(id: any) {
+    this.rastreadorService.getIdComando(id).subscribe(
+      (comando: Comando) => this.editComando(comando),
       (error: any) => console.log(error)
     );
   }  
 
-  get f() { return this.modeloForm.controls; }
-//CRIANDO NOVO fabricante
-async createModelo() {  
-    (await this.rastreadorService.createModelo(this.modeloForm.value))
+  get f() { return this.comandoForm.controls; }
+//CRIANDO NOVO comando
+async createComando() {  
+    (await this.rastreadorService.createComando(this.comandoForm.value))
       .pipe(first())
       .subscribe(
         (data) => {         
           // this.successmsg = true;
           this.concluded();
-            this.router.navigate([`/search-modelo`]);
+            this.router.navigate([`/search-comando`]);
         },
         (error: any) => {
           this.error = error ? error : '';
@@ -105,15 +102,15 @@ async createModelo() {
         });
   }
 
-  updateModelo(id:any) {
-    this.rastreadorService.updateModelo(id, this.modeloForm.value)
+  updateComando(id:any) {
+    this.rastreadorService.updateComando(id, this.comandoForm.value)
     .pipe()
     .subscribe(
       Data => {
         if (Data) {
          
           this.concluded();
-          this.router.navigate([`search-modelo`]);
+          this.router.navigate([`search-comando`]);
         }
       },
       error => {
@@ -126,10 +123,10 @@ async createModelo() {
     this.submitted = true;
     
       if (this.id) {
-      this.updateModelo(this.id);
+      this.updateComando(this.id);
         
     } else {
-        this.createModelo();
+        this.createComando();
     }
 
     

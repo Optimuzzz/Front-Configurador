@@ -1,51 +1,19 @@
-<app-pagetitle title="Usuários" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
+<app-pagetitle title="Tipo de Comando" [breadcrumbItems]="breadCrumbItems"></app-pagetitle>
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="tipoComandoForm" (ngSubmit)="onSubmit()">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="name" name="name" id="floatingNome"
-                                    placeholder="Nome Completo">
-                                <label for="floatingNome">Nome</label>
+                                <input type="text" class="form-control" formControlName="tipo_comando"
+                                    name="tipo_comando" id="floatingNome" placeholder="Tipo Comando">
+                                <label for="floatingNome">Tipo de Comando</label>
                             </div>
-                        </div>
+                        </div>                   
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" formControlName="email" name="email"
-                                    id="floatingInput" placeholder="name@example.com">
-                                <label for="floatingInput">Email </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="login" name="login"
-                                    id="floatingInput2" placeholder="login">
-                                <label for="floatingInput2">Login </label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" formControlName="password" name="password"
-                                    id="floatingInput3" placeholder="password">
-                                <label for="floatingInput3">Senha provisória </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" formControlName="cpf_cnpj" name="cpf_cnpj"
-                                    id="cpf_cnpj" placeholder="Cpf  Cnpj">
-                                <label for="cpf_cnpj">Cpf - Cnpj</label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-floating">
                                 <select class="form-select" id="floatingSelect" name="id_status"
                                     formControlName="id_status">
                                     <option value="" disabled selected>Selecione</option>
@@ -57,30 +25,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect2" name="id_tipo_usuario"
-                                    formControlName="id_tipo_usuario">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="0">Usuário</option>
-                                </select>
-                                <label for="floatingSelect2">Nível de Usuário</label>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-floating mb-3 mb-lg-0">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
                                     name="observacao" formControlName="observacao"></textarea>
                                 <label for="floatingTextarea">Observação</label>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
+                    <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
                 </div>
                 <div class="text-end ">
                     <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
-                        <button class="btn btn-secondary w-md waves-effect waves-light" [routerLink]="['/user/search-user']"  >
-                            Voltar</button> {{' '}}                           
+                        <button class="btn btn-secondary w-md waves-effect waves-light"
+                            [routerLink]="['/search-tipo-comando']">
+                            Voltar</button> {{' '}}
                         <button class="btn btn-primary w-md waves-effect waves-light" type="submit">
                             {{btn ? 'Atualizar' : 'Cadastrar'}}</button>
                     </div>

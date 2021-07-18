@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { isEmpty, map } from 'rxjs/operators';
-import { Fabricante } from '../models/fabricante.models';
 import { RastreadorService } from '../rastreadorService/rastreadorService';
 import Swal from 'sweetalert2';
+import { TipoComando } from '../models/tipo-comando.models';
 
 
 
 @Component({
-  selector: 'app-search-fabricante',
-  templateUrl: './search-fabricante.component.html',
-  styleUrls: ['./search-fabricante.component.scss']
+  selector: 'app-search-tipo-comando',
+  templateUrl: './search-tipo-comando.component.html',
+  styleUrls: ['./search-tipo-comando.component.scss']
 })
-export class SearchFabricanteComponent implements OnInit {
+export class SearchTipoComandoComponent implements OnInit {
 
   breadCrumbItems!: Array<{}>;
   public paginaAtual = 1;
+  public numSelect = 2;
   messageError: any;
   error: any;
   flg: any; 
-  fabricantes: any[] = [];
+  tipo_comandos: any[] = [];
   
   constructor(
     private RastreadorService: RastreadorService,
@@ -27,33 +28,33 @@ export class SearchFabricanteComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.RastreadorService.getAllFabricante()
+    this.RastreadorService.getAllTipoComando()
     .pipe()
     .subscribe(
      Data =>{
-        this.fabricantes = Data;
+        this.tipo_comandos = Data;
     });
 
     this.breadCrumbItems = [
-      { label: 'Fabricantes' },
-      { label: 'Lista de Fabricantes', active: true }
+      { label: 'Tipo de Comando' },
+      { label: 'Lista Tipo de Comando', active: true }
     ];
     }
 
     deleteId(id: any) {
-      this.RastreadorService.deleteIdFabricante(id)
+      this.RastreadorService.deleteIdTipoComando(id)
       .pipe()
       .subscribe(        
         Data => {
-          if (Data){             
-            this.ngOnInit();
+          if (Data){  
+            this.ngOnInit();           
           }
         },
         error => {
           this.error = error ? error : '';
           this.messageError = error.error.message;
       })
-              
+             
     }
 
     /**
@@ -62,7 +63,7 @@ export class SearchFabricanteComponent implements OnInit {
    */
   delete(id:any) {
     Swal.fire({
-      title: 'Excluir Fabricante',
+      title: 'Excluir Tipo de Comando',
       text: "Você não poderá reverter está ação",
       icon: 'warning',
       showCancelButton: true,
@@ -73,7 +74,8 @@ export class SearchFabricanteComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.deleteId(id);
-        Swal.fire('Concluído!', 'O Fabricante foi excluído.', 'success');
+       
+        Swal.fire('Concluído!', 'O Tipo de Comando foi excluído.', 'success');
       }
     });
   }
