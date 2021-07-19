@@ -69,22 +69,21 @@ export class ModeloComponent implements OnInit {
 //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editModelo(modelo: Modelo) {
     //console.log(modelo.fabricante)
-    this.modeloForm.patchValue({
-      id_fabricante: modelo.fabricante.id_fabricante,
+    this.modeloForm.patchValue({      
       modelo: modelo.modelo,
+      id_fabricante: modelo.fabricante.id_fabricante,
       id_status: modelo.id_status,
       observacao: modelo.observacao
     });
-   console.log(modelo);
   }
+
 //PEGANDO OS DADOS DO modelo NA API ATRAVES DO ID
   getModelo(id: any) {    
     this.rastreadorService.getIdModelo(id).subscribe(
       (modelo: Modelo) => this.editModelo(modelo),      
       (error: any) => console.log(error)
-    );
- 
-  }  
+    ); 
+  }    
 
   get f() { return this.modeloForm.controls; }
 //CRIANDO NOVO fabricante
