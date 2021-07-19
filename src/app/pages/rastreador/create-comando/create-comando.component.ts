@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { first } from 'rxjs/operators';
@@ -25,14 +25,24 @@ export class ComandoComponent implements OnInit {
   id_tipo_comando: any;
   id_modelo: any;
   modelos: any = [];
-  
+  productForm: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder,    
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
-   
-  ) { } 
+    /////////new/////////////
+    private fb:FormBuilder
+   /////////new///////////
+  ) {
+    ////////////new///////////////////
+    this.productForm = this.fb.group({
+     
+      quantities: this.fb.array([]) ,
+    });
+    ///////////new////////////
+   } 
 
 
   ngOnInit(): void {
@@ -155,4 +165,29 @@ async createComando() {
     });
   }
 
+
+  
+ ////////////////new/////////////////////
+  
+  quantities() : FormArray {
+    return this.productForm.get("quantities") as FormArray
+  }
+   
+  newQuantity(): FormGroup {
+    return this.fb.group({
+      label: '',
+      campo: '',
+      tipo: '',
+      obrigatorio: false
+    })
+  }
+   
+  addQuantity() {
+    this.quantities().push(this.newQuantity());
+  }
+   
+  removeQuantity(i:number) {
+    this.quantities().removeAt(i);
+  }
+///////////////new//////////////////
 }
