@@ -127,6 +127,7 @@ export class RastreadorService {
         this.token = localStorage.getItem('token');
         const decoded: any = jwt_decode(this.token);
         comando.id_login_insert = decoded.id;
+        console.log(comando);
         return this.http.post<Comando>(`${environment.api}/comando`, comando);
 
     }

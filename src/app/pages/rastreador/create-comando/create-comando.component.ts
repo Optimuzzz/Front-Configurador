@@ -25,23 +25,28 @@ export class ComandoComponent implements OnInit {
   id_tipo_comando: any;
   id_modelo: any;
   modelos: any = [];
-  productForm: FormGroup;
+ // productForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,    
+   // private formBuilder: FormBuilder,    
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
-    /////////new/////////////
+   
     private fb:FormBuilder
-   /////////new///////////
+  
   ) {
-    ////////////new///////////////////
-    this.productForm = this.fb.group({
-     
-      quantities: this.fb.array([]) ,
+    
+    this.comandoForm = this.fb.group({
+      id_comando: ['', Validators.required], 
+      comando: ['', Validators.required],
+      id_status: ['', Validators.required], 
+      id_modelo: ['', Validators.required],
+      id_tipo_comando: ['', Validators.required],    
+      observacao: [null], 
+      quantities: this.fb.array([]) 
     });
-    ///////////new////////////
+ 
    } 
 
 
@@ -55,14 +60,14 @@ export class ComandoComponent implements OnInit {
       }
     })
 
-    this.comandoForm = this.formBuilder.group({
-      id_comando: ['', Validators.required], 
-      comando: ['', Validators.required],
-      id_status: ['', Validators.required], 
-      id_modelo: ['', Validators.required],
-      id_tipo_comando: ['', Validators.required],    
-      observacao: [null]
-    })
+    // this.comandoForm = this.formBuilder.group({
+    //   id_comando: ['', Validators.required], 
+    //   comando: ['', Validators.required],
+    //   id_status: ['', Validators.required], 
+    //   id_modelo: ['', Validators.required],
+    //   id_tipo_comando: ['', Validators.required],    
+    //   observacao: [null]
+    // })
 
     this.breadCrumbItems = [
       { label: 'Comando' },
@@ -95,7 +100,8 @@ export class ComandoComponent implements OnInit {
       id_status: comando.id_status,
       observacao: comando.observacao,
       id_tipo_comando: comando.tipo_comando.id_tipo_comando,
-      id_modelo: comando.modelo.id_modelo
+      id_modelo: comando.modelo.id_modelo,
+      quantities: this.fb.array([])
     });
   }
 //PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
@@ -150,9 +156,6 @@ async createComando() {
     } else {
         this.createComando();
     }
-
-    
-    
  }
 
   concluded() {
@@ -164,13 +167,9 @@ async createComando() {
       timer: 1500,
     });
   }
-
-
-  
- ////////////////new/////////////////////
-  
+ 
   quantities() : FormArray {
-    return this.productForm.get("quantities") as FormArray
+    return this.comandoForm.get("quantities") as FormArray
   }
    
   newQuantity(): FormGroup {
@@ -189,5 +188,4 @@ async createComando() {
   removeQuantity(i:number) {
     this.quantities().removeAt(i);
   }
-///////////////new//////////////////
 }
