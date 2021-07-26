@@ -24,14 +24,14 @@ export class ComandoComponent implements OnInit {
   id_modelo: any;
   modelos: any = [];
   countSeparator: any;
-  listCampos:any[] = [];
+  listCampos: any[] = [];
 
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // PEGANDO O PARAMETRO ID ATRAVÉS DA URL
@@ -80,10 +80,11 @@ export class ComandoComponent implements OnInit {
 
   getSeparateComando() {
     const comandoValue = this.f.comando.value;
-    this.countSeparator = comandoValue.split('}}{{').length;
-    this.listCampos = comandoValue.split('}}{{');
-    console.log(this.listCampos);
-    
+    const regex = /\{\{\w{1,}\}\}/g;
+    const found = comandoValue.match(regex);
+    found.forEach((element: any) => {
+      this.quantities().push(this.newQuantity(element));
+    });
   }
 
   //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
@@ -170,18 +171,22 @@ export class ComandoComponent implements OnInit {
 
   newQuantity(value: any): FormGroup {
     return this.fb.group({
-        label: [''],
-        campo: [value],
-        tipo: [''],
-        obrigatorio: false,
-      });   
- }
-
-  addQuantity() {
-    for (let i = 0; i < this.countSeparator; i++) {
-      this.quantities().push(this.newQuantity(this.listCampos[i]));      
-    }
+      label: [''],
+      campo: [value],
+      tipo: [''],
+      obrigatorio: false,
+    });
   }
+
+  // addQuantity() {
+
+    
+  //   // for (let i = 0; i < this.countSeparator; i++) {
+  //   //   this.quantities().push(this.newQuantity(this.listCampos[i]));
+  //   // }
+
+
+  // }
 
   removeQuantity(i: number) {
     this.quantities().removeAt(i);
