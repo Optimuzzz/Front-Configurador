@@ -25,7 +25,8 @@ export class ComandoComponent implements OnInit {
   modelos: any = [];
   countSeparator: any;
   listCampos: any[] = [];
-  found: any
+  found: any;
+  verific: boolean = false;
 
   constructor(
     private router: Router,
@@ -43,11 +44,11 @@ export class ComandoComponent implements OnInit {
         this.getComando(this.id);
       }
     });
-
+	
     this.comandoForm = this.fb.group({
       id_comando: ['', Validators.required],
       comando: ['', Validators.required],
-      id_status: ['', Validators.required],
+      id_status: ['1', Validators.required],
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
       observacao: [null],
@@ -191,12 +192,14 @@ export class ComandoComponent implements OnInit {
   }
 
   addQuantity() {
+	  this.verific = true;
     this.found.forEach((element: any) => {
       this.quantities().push(this.newQuantity(element));
     });
   }
 
   addQuantity2() {
+	//this.verific = false;
     this.quantities().push(this.newQuantity(''));
   }
 

@@ -7,11 +7,16 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" (ngModelChange)="getSeparateComando()" class="form-control" formControlName="comando" name="comando"
-                                    id="floatingNome" placeholder="Comando">
-                                <label for="floatingNome">Comando</label>
+                                <select class="form-select" id="floatingSelect" name="id_fabricante"
+                                    formControlName="id_modelo">
+                                    <option value="" disabled selected>Selecione</option>
+                                    <option *ngFor="let modelo of modelos" value="{{modelo.id_modelo}}">
+                                        {{modelo.modelo}}</option>
+                                </select>
+                                <label for="floatingSelect">Modelo</label>
                             </div>
                         </div>
+                       
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect" name="id_fabricante"
@@ -25,15 +30,12 @@
                         </div>
                     </div>
                     <div class="row">
+                        
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="id_fabricante"
-                                    formControlName="id_modelo">
-                                    <option value="" disabled selected>Selecione</option>
-                                    <option *ngFor="let modelo of modelos" value="{{modelo.id_modelo}}">
-                                        {{modelo.modelo}}</option>
-                                </select>
-                                <label for="floatingSelect">Modelo</label>
+                                <input type="text" (ngModelChange)="getSeparateComando()" class="form-control"
+                                    formControlName="comando" name="comando" id="floatingNome" placeholder="Comando" >
+                                <label for="floatingNome">Comando</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -60,9 +62,14 @@
                     <br>
                     <div formArrayName="quantities">
                         <div style="margin-bottom: 25px;">
-                            <button type="button" (click)="addQuantity()" class="btn btn-primary btn-sm">
+                            <button type="button" (click)="addQuantity()" class="btn btn-primary btn-sm" *ngIf="this.comandoForm.controls.quantities.value == ''" 
+                           [disabled]="!comandoForm.invalid" >
                                 Gerar Campos
                             </button>
+                                    {{' '}}
+                            <button type="button" (click)="addQuantity2()" class="btn btn-primary btn-sm" *ngIf="this.comandoForm.controls.quantities.value != ''" >
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+
                         </div>
 
                         <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
@@ -110,12 +117,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <button type="button" (click)="addQuantity2()" class="btn btn-primary btn-sm">
-                                <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
-                        </div>
+
                     </div>
-     
+
                     <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
                     <div class="text-end ">
                         <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
@@ -129,8 +133,13 @@
                     </div>
                 </div>
             </form>
-            <br />
-            <!-- {{this.comandoForm.value | json}} -->
+             
+                <br />
+          <!--  {{this.comandoForm.controls.quantities.value | json}} -->
+         
+            
+
+          
         </div>
     </div> <!-- end col -->
 </div>
