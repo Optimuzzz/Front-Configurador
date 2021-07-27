@@ -25,6 +25,7 @@ export class ComandoComponent implements OnInit {
   modelos: any = [];
   countSeparator: any;
   listCampos: any[] = [];
+  found: any
 
   constructor(
     private router: Router,
@@ -81,10 +82,8 @@ export class ComandoComponent implements OnInit {
   getSeparateComando() {
     const comandoValue = this.f.comando.value;
     const regex = /\{\{\w{1,}\}\}/g;
-    const found = comandoValue.match(regex);
-    found.forEach((element: any) => {
-      this.quantities().push(this.newQuantity(element));
-    });
+    this.found = comandoValue.match(regex);
+    
   }
 
   //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
@@ -109,14 +108,15 @@ export class ComandoComponent implements OnInit {
   }
 
   //CRIANDO NOVO comando
-  async createComando() {
-    (await this.rastreadorService.createComando(this.comandoForm.value))
+  createComando() {
+     this.rastreadorService.createComando(this.comandoForm.value)
       .pipe(first())
       .subscribe(
         (data) => {
           // this.successmsg = true;
-          this.concluded();
-          this.router.navigate([`/search-comando`]);
+          if(data != ''){
+            this.createCamposComando(data.id_comando);
+          }
         },
         (error: any) => {
           this.error = error ? error : '';
@@ -124,6 +124,16 @@ export class ComandoComponent implements OnInit {
           // this.showSpinner = false;
         }
       );
+  }
+
+  createCamposComando(id_comando: any){
+      this.rastreadorService.createCamposComando(this.f.quantities.value, id_comando)
+      .subscribe(
+        (response: any) => {
+          this.concluded();
+          console.log(response);
+        }
+      )
   }
 
   updateComando(id: any) {
@@ -147,7 +157,8 @@ export class ComandoComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    console.log(this.f.fb.value)
+    //console.log(this.f.fb.value)
+    this.createComando()
     // if (this.id) {
     //   this.updateComando(this.id);
     // } else {
@@ -163,6 +174,7 @@ export class ComandoComponent implements OnInit {
       showConfirmButton: false,
       timer: 1500,
     });
+    this.router.navigate([`/search-comando`]);
   }
 
   quantities(): FormArray {
@@ -178,15 +190,15 @@ export class ComandoComponent implements OnInit {
     });
   }
 
-  // addQuantity() {
+  addQuantity() {
+    this.found.forEach((element: any) => {
+      this.quantities().push(this.newQuantity(element));
+    });
+  }
 
-    
-  //   // for (let i = 0; i < this.countSeparator; i++) {
-  //   //   this.quantities().push(this.newQuantity(this.listCampos[i]));
-  //   // }
-
-
-  // }
+  addQuantity2() {
+    this.quantities().push(this.newQuantity(''));
+  }
 
   removeQuantity(i: number) {
     this.quantities().removeAt(i);

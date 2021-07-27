@@ -131,6 +131,11 @@ export class RastreadorService {
         return this.http.post<Comando>(`${environment.api}/comando`, comando);
 
     }
+    
+    createCamposComando(quantities:any, id_comando: any) {
+        return this.http.post<any>(`${environment.api}/comando-campos`, {quantities, id_comando});
+
+    }
 
     getIdComando(id: any) {
         return this.http.get(`${environment.api}/comando/${id}`);
