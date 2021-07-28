@@ -7,6 +7,7 @@ export class Comando {
     id_login_insert?:number;
     id_login_update?:number; 
     modelo?: any;
+    quantities?: any;
 
    
 }

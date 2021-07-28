@@ -27,6 +27,8 @@ export class ComandoComponent implements OnInit {
   listCampos: any[] = [];
   found: any;
   verific: boolean = false;
+  camposComando: any;
+  camposComando2: any;
 
   constructor(
     private router: Router,
@@ -44,7 +46,7 @@ export class ComandoComponent implements OnInit {
         this.getComando(this.id);
       }
     });
-	
+
     this.comandoForm = this.fb.group({
       id_comando: ['', Validators.required],
       comando: ['', Validators.required],
@@ -84,11 +86,15 @@ export class ComandoComponent implements OnInit {
     const comandoValue = this.f.comando.value;
     const regex = /\{\{\w{1,}\}\}/g;
     this.found = comandoValue.match(regex);
-    
+
   }
 
   //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
-  editComando(comando: Comando) {
+  editComando(comando: any, campos: any) {
+  
+      //  console.log(campos[0].campo);
+    //  console.log(campos);
+  
     this.comandoForm.patchValue({
       id_comando: comando.id_comando,
       comando: comando.comando,
@@ -96,26 +102,50 @@ export class ComandoComponent implements OnInit {
       observacao: comando.observacao,
       id_tipo_comando: comando.tipo_comando.id_tipo_comando,
       id_modelo: comando.modelo.id_modelo,
-      quantities: this.fb.array([]),
+   //   quantities: this.fb.array([]),
     });
+
   }
 
   //PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
   getComando(id: any) {
     this.rastreadorService.getIdComando(id).subscribe(
-      (comando: Comando) => this.editComando(comando),
-      (error: any) => console.log(error)
+      (comando: any) => {
+        if (comando) {
+          this.rastreadorService.getCamposComando(id).subscribe(
+            (response: any) => {
+              if(response){
+                this.editComando(comando, response)
+              }
+            //  this.camposComando2 = response;
+              //  console.log(response);
+            }
+          );
+        }
+
+        // this.camposComando = comando;
+        // console.log(this.camposComando);
+      },
+      (error: any) => console.log(error),
     );
+
+    this.editComando(this.camposComando, this.camposComando2);
+    // console.log(this.camposComando);
+    // console.log(this.camposComando2);
+  }
+
+  getCamposComando(id: any) {
+
   }
 
   //CRIANDO NOVO comando
   createComando() {
-     this.rastreadorService.createComando(this.comandoForm.value)
+    this.rastreadorService.createComando(this.comandoForm.value)
       .pipe(first())
       .subscribe(
         (data) => {
           // this.successmsg = true;
-          if(data != ''){
+          if (data != '') {
             this.createCamposComando(data.id_comando);
           }
         },
@@ -127,8 +157,8 @@ export class ComandoComponent implements OnInit {
       );
   }
 
-  createCamposComando(id_comando: any){
-      this.rastreadorService.createCamposComando(this.f.quantities.value, id_comando)
+  createCamposComando(id_comando: any) {
+    this.rastreadorService.createCamposComando(this.f.quantities.value, id_comando)
       .subscribe(
         (response: any) => {
           this.concluded();
@@ -192,14 +222,14 @@ export class ComandoComponent implements OnInit {
   }
 
   addQuantity() {
-	  this.verific = true;
+    this.verific = true;
     this.found.forEach((element: any) => {
       this.quantities().push(this.newQuantity(element));
     });
   }
 
   addQuantity2() {
-	//this.verific = false;
+    //this.verific = false;
     this.quantities().push(this.newQuantity(''));
   }
 

@@ -141,6 +141,10 @@ export class RastreadorService {
         return this.http.get(`${environment.api}/comando/${id}`);
     }
 
+    getCamposComando(id: any) {
+        return this.http.get(`${environment.api}/comando-campos/id_comando/${id}`);
+    }
+
     updateComando(id: any, comando: Comando) {
         this.token = localStorage.getItem('token');
         const decoded: any = jwt_decode(this.token);

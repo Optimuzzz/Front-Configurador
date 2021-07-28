@@ -29,7 +29,9 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col" class="text-center">Comandos</th>
+                            <th scope="col" class="text-center">Modelo</th>
+                            <th scope="col" class="text-center">Tipo Comando</th>
+                            <th scope="col" class="text-center">Comando</th>
                             <th scope="col" class="text-center">Status</th>
                             <th scope="col" class="text-center"> </th>
                         </tr>
@@ -38,6 +40,8 @@
                         <tr *ngFor="let comando of comandos | paginate: { itemsPerPage: numSelect, currentPage: paginaAtual } | 
                             filter:[{field:'comando', value: filtro}]; let i  = index">
                             <td scope="row">{{i + 1}}</td>
+                            <td class="text-center">{{comando.modelo.modelo}}</td>
+                            <td class="text-center">{{comando.tipo_comando.tipo_comando}}</td>
                             <td class="text-center">{{comando.comando}}</td>
                             <td *ngIf="comando.id_status == 0">
                                 <h5 class="text-center"><span class="badge bg-warning"> Inativo </span></h5>

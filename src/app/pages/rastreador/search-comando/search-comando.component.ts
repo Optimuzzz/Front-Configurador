@@ -16,7 +16,7 @@ export class SearchComandoComponent implements OnInit {
 
   breadCrumbItems!: Array<{}>;
   public paginaAtual = 1;
-  public numSelect = 2;
+  public numSelect = 10;
   messageError: any;
   error: any;
   flg: any; 
@@ -31,8 +31,13 @@ export class SearchComandoComponent implements OnInit {
     this.RastreadorService.getAllComando()
     .pipe()
     .subscribe(
-     Data =>{
-        this.comandos = Data;
+     (response: any) =>{
+        response.forEach((element: any) => {
+          this.comandos.push(element);
+        });
+
+        console.log(this.comandos)
+        
     });
 
     this.breadCrumbItems = [
