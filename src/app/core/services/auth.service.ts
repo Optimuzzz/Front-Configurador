@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ForgotPassword } from './forgotPassword';
 import { ResetPassword } from './resetPasword';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 
 @Injectable({ providedIn: 'root' })
@@ -98,5 +99,42 @@ export class AuthAuthenticationService {
         let options = { headers: headers };
 
         return this.http.post<any>(`${environment.api}/auth/reset-password`, resetPassword, options);
+    }
+
+    getTokenExpirationDate(token: string): Date {
+        const decoded: any = jwt_decode(token);
+
+        if (decoded.exp === undefined) {
+            return null as any;
+        }
+
+        const date = new Date(0);
+        date.setUTCSeconds(decoded.exp);
+        return date;
+    }
+
+    //verificando se o token estar expirado
+    isTokenExpired(token?: any): boolean {
+        if (!token) {
+            return true;
+        }
+
+        const date = this.getTokenExpirationDate(token);
+        if (date === undefined) {
+            return false;
+        }
+
+        return !(date.valueOf() > new Date().valueOf());
+    }
+
+    //verificando se o usuário estar logado
+    isUserLoggedIn(token: any) {
+        if (!token) {
+            return false;
+        } else if (this.isTokenExpired(token)) {
+            return false
+        }
+
+        return true;
     }
 }
