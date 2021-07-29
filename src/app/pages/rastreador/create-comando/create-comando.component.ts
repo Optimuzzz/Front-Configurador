@@ -52,6 +52,7 @@ export class ComandoComponent implements OnInit {
       (response: any) => {
         if(response){
           this.updateQuantity(response);
+         
         }
       }
     );
@@ -77,13 +78,14 @@ export class ComandoComponent implements OnInit {
       .subscribe((Data) => {
         this.tipo_comandos = Data;
       });
-
+  
     this.rastreadorService
       .getAllModelo()
       .pipe()
       .subscribe((Data) => {
         this.modelos = Data;
       });
+      
   }
   // termino do ngOnInit
 
@@ -100,7 +102,7 @@ export class ComandoComponent implements OnInit {
 
   //PREENCHENDO DADOS NO FORMULÁRIO PARA EDITAR
   editComando(comando: Comando) {
-    console.log(comando);
+  //  console.log(comando);
     this.comandoForm.patchValue({
       comando: comando.comando,
       id_status: comando.id_status,
@@ -146,7 +148,7 @@ export class ComandoComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.concluded();
-          console.log(response);
+      
         }
       )
   }
@@ -155,8 +157,7 @@ export class ComandoComponent implements OnInit {
     this.rastreadorService.updateCamposComando(this.f.quantities.value, id_comando)
       .subscribe(
         (response: any) => {
-          this.concluded();
-          console.log(response);
+          this.concluded(); 
         }
       )
   }
@@ -180,6 +181,23 @@ export class ComandoComponent implements OnInit {
         }
       );
   }
+
+  
+	deleteUniqueCampoId(id: any) {
+		this.rastreadorService.deleteUniqueCampoId(id)
+			.pipe()
+			.subscribe(
+				Data => {
+					if (Data) {
+						this.ngOnInit();
+					}
+				},
+				error => {
+					this.error = error ? error : '';
+					this.messageError = error.error.message;
+				})
+
+	}
 
   onSubmit() {
     this.submitted = true;
@@ -214,6 +232,7 @@ export class ComandoComponent implements OnInit {
       campo: [value.campo],
       tipo: [value.tipo],
       obrigatorio: value.obrigatorio,
+      id_comando_campos: value.id_comando_campos
     });
   }
 
@@ -237,6 +256,7 @@ export class ComandoComponent implements OnInit {
   }
 
   removeQuantity(i: number) {
+    console.log(i)
     this.quantities().removeAt(i);
   }
 }

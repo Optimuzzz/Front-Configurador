@@ -154,7 +154,7 @@ export class RastreadorService {
         this.token = localStorage.getItem('token');
         const decoded: any = jwt_decode(this.token);
         comando.id_login_update = decoded.id;
-        console.log(comando)
+       // console.log(comando)
         return this.http.patch(`${environment.api}/comando/${id}`, comando);
     }
 
@@ -162,4 +162,14 @@ export class RastreadorService {
         return this.http.delete(`${environment.api}/comando/${id}`);
     }
 
+    deleteIdCamposComando(id: any) {
+        return this.http.delete(`${environment.api}/comando-campos/${id}`);
+    }
+
+    deleteUniqueCampoId(id: any) {
+        return this.http.delete(`${environment.api}/comando-campos/uniqueId${id}`);
+    }
+
+
+    
 }

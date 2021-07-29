@@ -108,14 +108,19 @@
                                         Obrigatório?
                                     </div>
                                 </div>
+                             
 
                                 <div class="col-lg-1">
                                     <div class="form-floating mb-3">
+                                        <input type="text" formControlName="id_comando_campos" style="width: 30px;">
                                         <button (click)="removeQuantity(i)" class="btn btn-danger">
                                             <i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </div>
+                                    
+                                    
                                 </div>
                             </div>
+                            {{quantity.id_comando_campos}}
                         </div>
 
                     </div>
@@ -135,11 +140,7 @@
             </form>
              
                 <br />
-          <!--  {{this.comandoForm.controls.quantities.value | json}} -->
-         
-            
-
-          
+           <!-- {{this.comandoForm.controls.quantities.value | json}} -->
         </div>
     </div> <!-- end col -->
 </div>
