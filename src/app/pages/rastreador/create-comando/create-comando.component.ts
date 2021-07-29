@@ -52,7 +52,6 @@ export class ComandoComponent implements OnInit {
       (response: any) => {
         if(response){
           this.updateQuantity(response);
-         
         }
       }
     );
@@ -97,6 +96,7 @@ export class ComandoComponent implements OnInit {
     const comandoValue = this.f.comando.value;
     const regex = /\{\{\w{1,}\}\}/g;
     this.found = comandoValue.match(regex);
+    // console.log(this.found);
 
   }
 
@@ -202,8 +202,6 @@ export class ComandoComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    //console.log(this.f.fb.value)
-    //this.createComando()
     if (this.id) {
       this.updateComando(this.id);
     } else {
@@ -228,6 +226,16 @@ export class ComandoComponent implements OnInit {
 
   newQuantity(value: any): FormGroup {
     return this.fb.group({
+      label: [''],
+      campo: [value],
+      tipo: [''],
+      obrigatorio: false,
+      id_comando_campos: ['']
+    });
+  }
+  
+  updateFormQuantity(value: any): FormGroup {
+    return this.fb.group({
       label: [value.label],
       campo: [value.campo],
       tipo: [value.tipo],
@@ -239,14 +247,15 @@ export class ComandoComponent implements OnInit {
   updateQuantity(value: any) {
     this.verific = true;
     value.forEach((element: any) => {
-      this.quantities().push(this.newQuantity(element));
+      return this.quantities().push(this.updateFormQuantity(element));
     });
   }
   
+
   addQuantity() {
     this.verific = true;
     this.found.forEach((element: any) => {
-      this.quantities().push(this.newQuantity(element));
+      return this.quantities().push(this.newQuantity(element));
     });
   }
 
@@ -256,7 +265,7 @@ export class ComandoComponent implements OnInit {
   }
 
   removeQuantity(i: number) {
-    console.log(i)
+    // console.log(i)
     this.quantities().removeAt(i);
   }
 }
