@@ -132,7 +132,8 @@ export class RastreadorService {
 
     }
     
-    createCamposComando(quantities:any, id_comando: any) {
+    createCamposComando(comando: Comando, id_comando: any) {
+        const { quantities } = comando;
         return this.http.post<any>(`${environment.api}/comando-campos`, {quantities, id_comando});
 
     }
@@ -164,6 +165,10 @@ export class RastreadorService {
 
     deleteIdCamposComando(id: any) {
         return this.http.delete(`${environment.api}/comando-campos/${id}`);
+    }
+    
+    deleteOneIdCamposComando(id: any) {
+        return this.http.delete(`${environment.api}/comando-campos/one-campo/${id}`);
     }
 
     deleteUniqueCampoId(id: any) {

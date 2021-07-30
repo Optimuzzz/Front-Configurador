@@ -63,7 +63,7 @@
                     <div formArrayName="quantities">
                         <div style="margin-bottom: 25px;">
                             <button type="button" (click)="addQuantity()" class="btn btn-primary btn-sm" *ngIf="this.comandoForm.controls.quantities.value == ''" 
-                           [disabled]="!comandoForm.invalid" >
+                            [disabled]="this.comandoForm.controls.comando.value == ''" >
                                 Gerar Campos
                             </button>
                                     {{' '}}
@@ -108,19 +108,19 @@
                                         Obrigatório?
                                     </div>
                                 </div>
-                             
+                                
 
                                 <div class="col-lg-1">
                                     <div class="form-floating mb-3">
-                                        <input type="text" formControlName="id_comando_campos" style="width: 30px;">
-                                        <button (click)="removeQuantity(i)" class="btn btn-danger">
-                                            <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <!-- <input type="button" (click)="removeQuantity(i)" value="id_comando_campos" formControlName="id_comando_campos" style="width: 30px;"> -->
+                                        <!-- <button (click)="removeQuantity(i)" class="btn btn-danger">
+                                            <i class="fa fa-trash" aria-hidden="true"></i></button> -->
+                                            <button type="button" (click)="removeQuantity(i, this.comandoForm.controls.quantities.value[i].id_comando_campos)" class="btn btn-danger mdi mdi-trash-can-outline"></button>
                                     </div>
                                     
                                     
                                 </div>
                             </div>
-                            {{quantity.id_comando_campos}}
                         </div>
 
                     </div>
