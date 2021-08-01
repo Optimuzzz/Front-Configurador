@@ -202,7 +202,7 @@ export class ComandoComponent implements OnInit {
     if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
       for (let i = 0; i < this.found.length; i++) {
         if (this.found[i] != this.comandoForm.getRawValue().quantities[i].campo) {
-          this.messageError = `Verifique o valor do campo ${i + 1} se estar de acordo com o seu comando`;
+          this.messageError = `Verifique o valor do campo ${i + 1} se está de acordo com o seu comando`;
           verifica = true;
         }
       }
@@ -216,7 +216,7 @@ export class ComandoComponent implements OnInit {
       }
 
     } else {
-      this.messageError = "Atenção, verifique se a quantidades de campos estar de acordo com o seu comando!"
+      this.messageError = "Atenção, verifique se a quantidades de campos está de acordo com o seu comando!"
     }
   }
 
@@ -239,8 +239,8 @@ export class ComandoComponent implements OnInit {
     return this.fb.group({
       label: [''],
       campo: [{ value: value, disabled: true }],
-      tipo: [''],
-      obrigatorio: false,
+      tipo: ['text'],
+      obrigatorio: true,
       id_comando_campos: [''],
     });
   }
