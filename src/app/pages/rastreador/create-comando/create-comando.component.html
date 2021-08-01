@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="id_fabricante"
+                                <select class="form-select" id="id_modelo" name="id_modelo"
                                     formControlName="id_modelo">
                                     <option value="" disabled selected>Selecione</option>
                                     <option *ngFor="let modelo of modelos" value="{{modelo.id_modelo}}">
@@ -19,7 +19,7 @@
                        
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="id_fabricante"
+                                <select class="form-select" id="id_tipo_comando" name="id_tipo_comando"
                                     formControlName="id_tipo_comando">
                                     <option value="" disabled selected>Selecione</option>
                                     <option *ngFor="let tipo_comando of tipo_comandos"
@@ -34,28 +34,28 @@
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <input type="text" (ngModelChange)="getSeparateComando()" class="form-control"
-                                    formControlName="comando" name="comando" id="floatingNome" placeholder="Comando" >
+                                    formControlName="comando" name="comando" id="comando" placeholder="Comando" >
                                 <label for="floatingNome">Comando</label>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect" name="id_status"
+                                <select class="form-select" id="id_status" name="id_status"
                                     formControlName="id_status">
                                     <option value="" disabled selected>Selecione</option>
                                     <option value="1">Ativo</option>
                                     <option value="0">Inativo</option>
                                 </select>
-                                <label for="floatingSelect">Status</label>
+                                <label for="id_status">Status</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-floating mb-3 mb-lg-0">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                <textarea class="form-control" placeholder="Leave a comment here" id="observacao"
                                     name="observacao" formControlName="observacao"></textarea>
-                                <label for="floatingTextarea">Observação</label>
+                                <label for="observacao">Observação</label>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,8 @@
                             </button>
                                     {{' '}}
                             <button type="button" (click)="addQuantity2()" class="btn btn-primary btn-sm" *ngIf="this.comandoForm.controls.quantities.value != ''" >
-                                <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                Refazer Campos
+                            </button>
 
                         </div>
 
@@ -76,34 +77,34 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" formControlName="label" class="form-control" id="label"
-                                            name="label" placeholder="Label">
-                                        <label for="label" class="control-label">Label</label>
+                                        <input type="text" formControlName="label" class="form-control" id="label{{i}}"
+                                            name="label{{i}}" placeholder="Label">
+                                        <label for="label{{i}}" class="control-label">Label</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <input type="text" formControlName="campo" class="form-control" id="campo"
+                                        <input type="text" formControlName="campo" class="form-control" id="campo{{i}}"
                                             placeholder="Campo" value="">
-                                        <label for="campo" class="control-label">Campo{{i+1}}</label>
+                                        <label for="campo{{i}}" class="control-label">Campo{{i+1}}</label>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-3">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="floatingSelect1" name="tipo"
+                                        <select class="form-select" id="tipo{{i}}" name="tipo{{i}}"
                                             formControlName="tipo">
                                             <option value="" disabled selected>Selecione</option>
                                             <option value="text">texto</option>
                                             <option value="number">numérico</option>
                                         </select>
-                                        <label for="floatingSelect1">Tipo</label>
+                                        <label for="tipo{{i}}">Tipo</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" formControlName="obrigatorio"
-                                            id="gridCheck">
+                                            id="obrigatorio{{i}}">
                                         <label class="form-check-label" for="gridCheck"></label>
                                         Obrigatório?
                                     </div>
@@ -115,7 +116,7 @@
                                         <!-- <input type="button" (click)="removeQuantity(i)" value="id_comando_campos" formControlName="id_comando_campos" style="width: 30px;"> -->
                                         <!-- <button (click)="removeQuantity(i)" class="btn btn-danger">
                                             <i class="fa fa-trash" aria-hidden="true"></i></button> -->
-                                            <button type="button" (click)="removeQuantity(i, this.comandoForm.controls.quantities.value[i].id_comando_campos)" class="btn btn-danger mdi mdi-trash-can-outline"></button>
+                                            <button type="button" (click)="removeOneFieldQuantity(i, this.comandoForm.controls.quantities.value[i].id_comando_campos)" class="btn btn-danger mdi mdi-trash-can-outline"></button>
                                     </div>
                                     
                                     

@@ -35,7 +35,7 @@ export class ComandoComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // PEGANDO O PARAMETRO ID ATRAVÉS DA URL
@@ -90,6 +90,8 @@ export class ComandoComponent implements OnInit {
     return this.comandoForm.controls;
   }
 
+
+  // function para pegar a quantidade de grupos no input comando
   getSeparateComando() {
     const comandoValue = this.f.comando.value;
     const regex = /\{\{\w{1,}\}\}/g;
@@ -104,7 +106,7 @@ export class ComandoComponent implements OnInit {
       observacao: comando.observacao,
       id_tipo_comando: comando.tipo_comando.id_tipo_comando,
       id_modelo: comando.modelo.id_modelo,
-      quantities: this.fb.array([]),
+      //quantities: this.fb.array([]),
     });
   }
 
@@ -114,7 +116,9 @@ export class ComandoComponent implements OnInit {
       (comando: Comando) => {
         this.editComando(comando);
       },
-      (error: any) => console.log(error)
+      (error: any) => {
+
+      }
     );
   }
 
@@ -148,7 +152,7 @@ export class ComandoComponent implements OnInit {
 
   updateCamposComando(id_comando: any) {
     this.rastreadorService
-      .updateCamposComando(this.f.quantities.value, id_comando)
+      .updateCamposComando(this.comandoForm.getRawValue().quantities, id_comando)
       .subscribe((response: any) => {
         this.concluded();
       });
@@ -193,11 +197,26 @@ export class ComandoComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    let verifica = false;
 
-    if (this.id) {
-      this.updateComando(this.id);
+    if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
+      for (let i = 0; i < this.found.length; i++) {
+        if (this.found[i] != this.comandoForm.getRawValue().quantities[i].campo) {
+          this.messageError = `Verifique o valor do campo ${i + 1} se estar de acordo com o seu comando`;
+          verifica = true;
+        }
+      }
+
+      if (verifica === false) {
+        if (this.id) {
+          this.updateComando(this.id);
+        } else {
+          this.createComando();
+        }
+      }
+
     } else {
-      this.createComando();
+      this.messageError = "Atenção, verifique se a quantidades de campos estar de acordo com o seu comando!"
     }
   }
 
@@ -252,12 +271,37 @@ export class ComandoComponent implements OnInit {
   }
 
   addQuantity2() {
-    //this.verific = false;
-    this.quantities().push(this.newQuantity(''));
+    for (let i = this.comandoForm.getRawValue().quantities.length - 1; i >= 0; i--) {
+      this.removeAllFieldQuantity(i)
+    }
+
+    this.addQuantity();
   }
 
-  removeQuantity(i: number, id: number) {
-    this.rastreadorService.deleteOneIdCamposComando(id).subscribe();
+  removeAllFieldQuantity(i: number) {
     this.quantities().removeAt(i);
+  }
+
+  removeOneFieldQuantity(i: number, id: number) {
+    if (!this.id) {
+      this.quantities().removeAt(i);
+    } else {
+      Swal.fire({
+        title: 'Excluir Comando',
+        text: "Você não poderá reverter está ação",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#34c38f',
+        cancelButtonColor: '#f46a6a',
+        confirmButtonText: 'Sim, excluir',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.value) {
+          this.rastreadorService.deleteOneIdCamposComando(id).subscribe();
+          this.quantities().removeAt(i);
+          Swal.fire('Concluído!', 'O Comando foi excluído.', 'success');
+        }
+      });
+    }
   }
 }
