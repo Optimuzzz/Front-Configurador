@@ -29,6 +29,7 @@ export class ComandoComponent implements OnInit {
   verific: boolean = false;
   camposComando: any;
   getIDCampo: any;
+  allFieldsUpdate: any
 
   constructor(
     private router: Router,
@@ -51,6 +52,7 @@ export class ComandoComponent implements OnInit {
       .getCamposComando(this.id)
       .subscribe((response: any) => {
         if (response) {
+          this.allFieldsUpdate = response;
           this.updateQuantity(response);
         }
       });
@@ -235,6 +237,7 @@ export class ComandoComponent implements OnInit {
     return this.comandoForm.get('quantities') as FormArray;
   }
 
+  // vai ser chamado no gerar campos na hora do cadastro
   newQuantity(value: any): FormGroup {
     return this.fb.group({
       label: [''],
@@ -242,6 +245,19 @@ export class ComandoComponent implements OnInit {
       tipo: ['text'],
       obrigatorio: true,
       id_comando_campos: [''],
+    });
+  }
+
+  // vai ser chamado na hora de refazer os campos no update
+  newQuantityUpdate(value: any, campos: any): FormGroup {
+    console.log(this.found);
+    console.log(value);
+    return this.fb.group({
+      label: [value.label ? value.label : ''],
+      campo: [campos],
+      tipo: [value.tipo ? value.tipo : 'text'],
+      obrigatorio: [value.obrigatorio ? value.obrigatorio : true],
+      id_comando_campos: [value.id_comando_campos],
     });
   }
 
@@ -270,12 +286,24 @@ export class ComandoComponent implements OnInit {
     });
   }
 
+  // refazer os campo no update
+  redoQuantity() {
+    this.verific = true;
+    for (let i = 0; i < this.found.length; i++) {
+      if (this.allFieldsUpdate[i] == undefined) {
+        this.quantities().push(this.newQuantityUpdate('', this.found[i]));
+      } else {
+        this.quantities().push(this.newQuantityUpdate(this.allFieldsUpdate[i], this.found[i]));
+      }
+    }
+  }
+
   addQuantity2() {
     for (let i = this.comandoForm.getRawValue().quantities.length - 1; i >= 0; i--) {
       this.removeAllFieldQuantity(i)
     }
 
-    this.addQuantity();
+    this.redoQuantity();
   }
 
   removeAllFieldQuantity(i: number) {
