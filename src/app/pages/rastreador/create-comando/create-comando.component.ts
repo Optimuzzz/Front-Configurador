@@ -5,13 +5,19 @@ import Swal from 'sweetalert2';
 import { first } from 'rxjs/operators';
 import { RastreadorService } from '../rastreadorService/rastreadorService';
 import { Comando } from '../models/comando.models';
+import { ComponentCanDeactivate } from './can-deactivate';
 
 @Component({
   selector: 'app-create-comando',
   templateUrl: './create-comando.component.html',
   // styleUrls: ['./create-comando.component.scss']
 })
-export class ComandoComponent implements OnInit {
+export class ComandoComponent implements OnInit, ComponentCanDeactivate {
+  canDeactivate(): boolean{
+    return !this.isDirty;
+  }
+
+  isDirty = false;
   comandoForm!: FormGroup;
   submitted = false;
   error: any;
@@ -200,6 +206,7 @@ export class ComandoComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     let verifica = false;
+    this.isDirty = false;
 
     if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
       for (let i = 0; i < this.found.length; i++) {

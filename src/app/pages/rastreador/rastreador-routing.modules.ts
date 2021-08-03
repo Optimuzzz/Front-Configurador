@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComandoComponent } from './create-comando/create-comando.component';
+import { DirtycheckGuard } from './create-comando/dirtycheck.guard';
 import { FabricanteComponent } from './create-fabricante/create-fabricante.component';
 import { ModeloComponent } from './create-modelo/create-modelo.component';
 import { TipoComandoComponent } from './create-tipo-comando/create-tipo-comando.component';
@@ -38,13 +39,13 @@ const routes: Routes = [
     path: 'edit-tipo-comando/:id', component: TipoComandoComponent
   },
   {
-    path: 'create-comando', component: ComandoComponent
+    path: 'create-comando', component: ComandoComponent, canDeactivate: [DirtycheckGuard]
   },
   {
     path: 'search-comando', component: SearchComandoComponent
   },
   {
-    path: 'edit-comando/:id', component: ComandoComponent
+    path: 'edit-comando/:id', component: ComandoComponent, canDeactivate: [DirtycheckGuard]
   },
   
 ];
