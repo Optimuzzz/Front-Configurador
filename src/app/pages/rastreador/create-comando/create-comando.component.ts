@@ -167,7 +167,19 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
   }
 
   updateComando(id: any) {
-    this.rastreadorService
+
+    Swal.fire({
+      title: 'Atualizar Comando?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#34c38f',
+      cancelButtonColor: '#f46a6a',
+      confirmButtonText: 'Sim!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.rastreadorService
       .updateComando(id, this.comandoForm.value)
       .pipe()
       .subscribe(
@@ -175,7 +187,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
           if (response) {
             this.updateCamposComando(id);
 
-            this.concluded();
+            //this.concluded();
             this.router.navigate([`search-comando`]);
           }
         },
@@ -184,6 +196,11 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
           this.messageError = error.error.message;
         }
       );
+
+      }
+    });
+    
+    
   }
 
   deleteUniqueCampoId(id: any) {
@@ -211,7 +228,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
     if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
       for (let i = 0; i < this.found.length; i++) {
         if (this.found[i] != this.comandoForm.getRawValue().quantities[i].campo) {
-          this.messageError = `Verifique o valor do campo ${i + 1} se está de acordo com o seu comando`;
+          this.messageError = `O valor do campo ${i + 1} não está de acordo com o seu comando`;
           verifica = true;
         }
       }
@@ -225,7 +242,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
       }
 
     } else {
-      this.messageError = "Atenção, verifique se a quantidades de campos está de acordo com o seu comando!"
+      this.messageError = "A quantidade de campos não está de acordo com o seu comando!"
     }
   }
 
@@ -250,20 +267,19 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
       label: [''],
       campo: [{ value: value, disabled: true }],
       tipo: ['text'],
-      obrigatorio: true,
+      obrigatorio: 1,
       id_comando_campos: [''],
     });
   }
 
   // vai ser chamado na hora de refazer os campos no update
   newQuantityUpdate(value: any, campos: any): FormGroup {
-    console.log(this.found);
-    console.log(value);
+    this.messageError = '';
     return this.fb.group({
       label: [value.label ? value.label : ''],
       campo: [campos],
       tipo: [value.tipo ? value.tipo : 'text'],
-      obrigatorio: [value.obrigatorio ? value.obrigatorio : true],
+      obrigatorio: [value.obrigatorio ? value.obrigatorio : 0],
       id_comando_campos: [value.id_comando_campos],
     });
   }
@@ -322,7 +338,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
       this.quantities().removeAt(i);
     } else {
       Swal.fire({
-        title: 'Excluir Comando',
+        title: 'Excluir Comando?',
         text: "Você não poderá reverter está ação",
         icon: 'warning',
         showCancelButton: true,

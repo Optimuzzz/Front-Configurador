@@ -29,15 +29,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        
-                        <div class="col-lg-6">
+                    <div class="row">                        
+                        <div class="col-lg-12">
                             <div class="form-floating mb-3">
                                 <input type="text" (ngModelChange)="getSeparateComando()" class="form-control"
                                     formControlName="comando" name="comando" id="comando" placeholder="Comando" >
                                 <label for="floatingNome">Comando</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="id_status" name="id_status"
@@ -68,7 +69,7 @@
                             </button>
                                     {{' '}}
                             <button type="button" (click)="addQuantity2()" class="btn btn-primary btn-sm" *ngIf="this.comandoForm.controls.quantities.value != ''" >
-                                Refazer Campos
+                                Atualizar campos
                             </button>
 
                         </div>
@@ -111,13 +112,13 @@
                                 </div>
                                 
 
-                                <div class="col-lg-1">
+                                <!-- <div class="col-lg-1">
                                     <div class="form-floating mb-3">
                                             <button type="button" (click)="removeOneFieldQuantity(i, this.comandoForm.controls.quantities.value[i].id_comando_campos)" class="btn btn-danger mdi mdi-trash-can-outline"></button>
                                     </div>
                                     
                                     
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -126,7 +127,7 @@
                     <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
                     <div class="text-end ">
                         <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
-                            <button class="btn btn-secondary w-md waves-effect waves-light"
+                            <button class="btn btn-secondary w-md waves-effect waves-light" type="button"
                                 [routerLink]="['/search-comando']">
                                 Voltar</button> {{' '}}
                             <button class="btn btn-primary w-md waves-effect waves-light" type="submit"
