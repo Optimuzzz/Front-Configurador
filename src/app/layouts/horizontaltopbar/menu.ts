@@ -56,6 +56,13 @@ export const MENU: MenuItem[] = [
             },
         ]
     },
+    {
+        id: 5,
+        label: 'Envio',
+        icon: 'mdi mdi-alarm-panel',
+        link: '/envio-comando',
+
+    },
 
 
     // {

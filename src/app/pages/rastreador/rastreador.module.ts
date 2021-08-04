@@ -13,6 +13,7 @@ import { TipoComandoComponent } from './create-tipo-comando/create-tipo-comando.
 import { SearchTipoComandoComponent } from './search-tipo-comando/search-tipo-comando.component';
 import { ComandoComponent } from './create-comando/create-comando.component';
 import { SearchComandoComponent } from './search-comando/search-comando.component';
+import { EnvioComandoComponent } from './create-envio/create-envio.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SearchComandoComponent } from './search-comando/search-comando.componen
     TipoComandoComponent,
     SearchTipoComandoComponent,
     ComandoComponent,
-    SearchComandoComponent
+    SearchComandoComponent,
+    EnvioComandoComponent
 
   ],
   imports: [

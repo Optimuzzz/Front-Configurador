@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComandoComponent } from './create-comando/create-comando.component';
 import { DirtycheckGuard } from './create-comando/dirtycheck.guard';
+import { EnvioComandoComponent } from './create-envio/create-envio.component';
 import { FabricanteComponent } from './create-fabricante/create-fabricante.component';
 import { ModeloComponent } from './create-modelo/create-modelo.component';
 import { TipoComandoComponent } from './create-tipo-comando/create-tipo-comando.component';
@@ -46,6 +47,9 @@ const routes: Routes = [
   },
   {
     path: 'edit-comando/:id', component: ComandoComponent, canDeactivate: [DirtycheckGuard]
+  },
+  {
+    path: 'envio-comando', component: EnvioComandoComponent
   },
   
 ];
