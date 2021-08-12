@@ -15,7 +15,7 @@ export class EnvioComandoComponent implements OnInit {
   submitted = false;
   error: any;
   messageError: any = '';
-  id: any;
+  id: any = '';
   btn: boolean = false;
   breadCrumbItems!: Array<{}>;
   id_tipo_comando: any;
@@ -31,49 +31,59 @@ export class EnvioComandoComponent implements OnInit {
   hasUnsavedData: any;
   tipo_comandos: any = [];
 
+
+
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
     private fb: FormBuilder,
+
   ) { }
 
   ngOnInit(): void {
-   
+
     this.breadCrumbItems = [
       { label: 'Envio' },
       { label: 'Envio de Comando', active: true },
     ];
 
+    this.envioForm = this.fb.group({
+      id_modelo: ['', Validators.required],
+      id_tipo_comando: ['', Validators.required],
+      telefone: ['', Validators.required],
+    })
+
+
+ this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)
+ this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
+
+
+  }
+ // termino do ngOnInit
+  getAllTipoComandoEnvio(id?: any) {
     this.rastreadorService
-      .getAllTipoComando()
+      .getAllTipoComandoEnvio(id)
       .pipe()
       .subscribe((Data) => {
         this.tipo_comandos = Data;
+      //  console.log(id)
       });
+  }
 
+  getAllModeloEnvio(id?: any) {
     this.rastreadorService
-      .getAllModelo()
+      .getAllModeloEnvio(id)
       .pipe()
       .subscribe((Data) => {
         this.modelos = Data;
+       // console.log(Data)
       });
   }
-  // termino do ngOnInit
 
   get f() {
     return this.envioForm.controls;
   }
-
-
-  // function para pegar a quantidade de grupos no input comando
-  getSeparateComando() {
-    const comandoValue = this.f.comando.value;
-    const regex = /\{\{\w{1,}\}\}/g;
-    this.found = comandoValue.match(regex);
-  }
-
-
 
   //PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
 

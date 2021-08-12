@@ -202,7 +202,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
     
     
   }
-
+// verificar se está em uso era o botão exluir campo
   deleteUniqueCampoId(id: any) {
     this.rastreadorService
       .deleteUniqueCampoId(id)
@@ -272,7 +272,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
     });
   }
 
-  // vai ser chamado na hora de refazer os campos no update
+  // vai ser chamado na hora de atualizar os campos no update
   newQuantityUpdate(value: any, campos: any): FormGroup {
     this.messageError = '';
     return this.fb.group({
@@ -320,7 +320,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
       }
     }
   }
-
+// remove todos os campos e chama o refazer campos
   addQuantity2() {
     for (let i = this.comandoForm.getRawValue().quantities.length - 1; i >= 0; i--) {
       this.removeAllFieldQuantity(i)
@@ -332,7 +332,7 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
   removeAllFieldQuantity(i: number) {
     this.quantities().removeAt(i);
   }
-
+/// verificar se está em uso
   removeOneFieldQuantity(i: number, id: number) {
     if (!this.id) {
       this.quantities().removeAt(i);

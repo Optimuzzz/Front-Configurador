@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
-import { Fabricante } from '../models/fabricante.models';
 import { Modelo } from '../models/modelo.models';
 import { TipoComando } from '../models/tipo-comando.models';
 import { Comando } from '../models/comando.models';
+import { Fabricante } from '../models/fabricante.models';
 
 
 
@@ -171,7 +171,15 @@ export class RastreadorService {
     deleteUniqueCampoId(id: any) {
         return this.http.delete(`${environment.api}/comando-campos/uniqueId${id}`);
     }
+    // ENVIO//==============
+    getAllTipoComandoEnvio(id?: any) {
+        return this.http.get(`${environment.api}/comando/get/typecommand/${id}`);
+    }
 
+    getAllModeloEnvio(id?: any) {
+        return this.http.get(`${environment.api}/comando/get/model/${id}`);
+    }
+//=============================
 
     
 }

@@ -7,34 +7,34 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="id_modelo" name="id_modelo"
+                                <select class="form-select"   #selectList id="id_modelo" name="id_modelo" (change)="getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)"
                                     formControlName="id_modelo">
                                     <option value="" disabled selected>Selecione</option>
-                                    <option *ngFor="let modelo of modelos" value="{{modelo.id_modelo}}">
-                                        {{modelo.modelo}}</option>
+                                    <option *ngFor="let modelo of modelos" value="{{modelo.modelo_id_modelo}}"   >
+                                        {{modelo.modelo_modelo}}</option>
                                 </select>
-                                <label for="floatingSelect">Modelo</label>
+                                <label for="floatingSelect">Modelo</label> 
                             </div>
                         </div>
                        
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="id_tipo_comando" name="id_tipo_comando"
+                                <select class="form-select" id="id_tipo_comando" name="id_tipo_comando" (change)="getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)"
                                     formControlName="id_tipo_comando">
                                     <option value="" disabled selected>Selecione</option>
                                     <option *ngFor="let tipo_comando of tipo_comandos"
-                                        value="{{tipo_comando.id_tipo_comando}}">{{tipo_comando.tipo_comando}}</option>
+                                        value="{{tipo_comando.tipo_comando_id_tipo_comando}}">{{tipo_comando.tipo_comando_tipo_comando}}</option>
                                 </select>
                                 <label for="floatingSelect">Tipo de comando</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">                        
-                        <div class="col-lg-12">
+                        <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text" (ngModelChange)="getSeparateComando()" class="form-control"
-                                    formControlName="comando" name="comando" id="comando" placeholder="Comando" >
-                                <label for="floatingNome">Comando</label>
+                                <input type="text"  class="form-control"
+                                    formControlName="telefone" name="telefone" id="telefone" placeholder="Número da linha" >
+                                <label for="floatingNome">Número da linha </label>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
             </form>
              
                 <br />
-           <!-- {{this.comandoForm.controls.quantities.value | json}} -->
+           {{this.envioForm.controls.value | json}}
         </div>
     </div> <!-- end col -->
 </div>
