@@ -55,19 +55,24 @@ export class EnvioComandoComponent implements OnInit {
     })
 
 
- this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)
- this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
+    this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)
+    this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
 
+   
 
   }
- // termino do ngOnInit
+  // termino do ngOnInit
   getAllTipoComandoEnvio(id?: any) {
     this.rastreadorService
       .getAllTipoComandoEnvio(id)
       .pipe()
       .subscribe((Data) => {
         this.tipo_comandos = Data;
-      //  console.log(id)
+
+        if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
+          console.log("função que chama os inputs ")
+         
+        }
       });
   }
 
@@ -77,8 +82,18 @@ export class EnvioComandoComponent implements OnInit {
       .pipe()
       .subscribe((Data) => {
         this.modelos = Data;
-       // console.log(Data)
+
+        if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
+          console.log("função que chama os inputs ")
+        }
       });
+  }
+
+  comandoEnvio(id1?: any, id2?: any) {
+    if (id1 && id2) {
+      console.log("entrou")
+    }
+
   }
 
   get f() {
@@ -89,7 +104,7 @@ export class EnvioComandoComponent implements OnInit {
 
 
   onSubmit() {
-
+    console.log(this.envioForm.value)
   }
 
 

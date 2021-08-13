@@ -47,14 +47,13 @@
                                 Voltar</button> {{' '}}
                             <button class="btn btn-primary w-md waves-effect waves-light" type="submit"
                                 (ngSubmit)="onSubmit()">
-                                {{btn ? 'Atualizar' : 'Cadastrar'}}</button>
+                                {{btn ? 'Atualizar' : 'Enviar comando'}}</button>
                         </div>
                     </div>
                 </div>
             </form>
              
                 <br />
-           {{this.envioForm.controls.value | json}}
         </div>
     </div> <!-- end col -->
 </div>
