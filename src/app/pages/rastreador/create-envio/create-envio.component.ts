@@ -52,13 +52,12 @@ export class EnvioComandoComponent implements OnInit {
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
       telefone: ['', Validators.required],
+      comando: ['']
     })
 
 
     this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)
     this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
-
-   
 
   }
   // termino do ngOnInit
@@ -68,10 +67,8 @@ export class EnvioComandoComponent implements OnInit {
       .pipe()
       .subscribe((Data) => {
         this.tipo_comandos = Data;
-
         if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
-          console.log("função que chama os inputs ")
-         
+          this.comandoEnvio(this.envioForm.controls.id_tipo_comando.value, this.envioForm.controls.id_modelo.value)
         }
       });
   }
@@ -82,19 +79,34 @@ export class EnvioComandoComponent implements OnInit {
       .pipe()
       .subscribe((Data) => {
         this.modelos = Data;
-
         if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
-          console.log("função que chama os inputs ")
+          this.comandoEnvio(this.envioForm.controls.id_tipo_comando.value, this.envioForm.controls.id_modelo.value)
         }
       });
   }
 
   comandoEnvio(id1?: any, id2?: any) {
+   // console.log(id1, id2)
     if (id1 && id2) {
-      console.log("entrou")
+      this.rastreadorService
+        .getComandoEnvio(id1, id2)
+        .pipe()
+        .subscribe((Data) => {
+          console.log(Data);      
+        //  this.campoComandoEnvio(Data))
+        });
     }
-
   }
+
+  // campoComandoEnvio(id: any) {
+  //   this.rastreadorService
+  //     .getCampoComandoEnvio(id)
+  //     .pipe()
+  //     .subscribe((Data) => {
+  //       console.log(this.envioForm.controls.comando.value);
+  //      // console.log(Data)
+  //     });
+  // }
 
   get f() {
     return this.envioForm.controls;
@@ -124,3 +136,5 @@ export class EnvioComandoComponent implements OnInit {
 
 
 }
+
+

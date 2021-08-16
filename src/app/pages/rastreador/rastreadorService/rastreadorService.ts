@@ -171,7 +171,7 @@ export class RastreadorService {
     deleteUniqueCampoId(id: any) {
         return this.http.delete(`${environment.api}/comando-campos/uniqueId${id}`);
     }
-    // ENVIO//==============
+    /////=======// ENVIO//==============
     getAllTipoComandoEnvio(id?: any) {
         return this.http.get(`${environment.api}/comando/get/typecommand/${id}`);
     }
@@ -179,7 +179,16 @@ export class RastreadorService {
     getAllModeloEnvio(id?: any) {
         return this.http.get(`${environment.api}/comando/get/model/${id}`);
     }
-//=============================
 
-    
+    getComandoEnvio(id_tipo_comando: any, id_modelo: any) {
+        const params = {id_tipo_comando, id_modelo}
+        return this.http.get(`${environment.api}/comando/get/command/send` , {params});
+    }
+
+    getCampoComandoEnvio(id?: any) {
+        return this.http.get(`${environment.api}/comando/get/field-command/send/${id}`);
+    }
+/////=============================
+
+
 }
