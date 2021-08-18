@@ -7,52 +7,55 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select"   #selectList id="id_modelo" name="id_modelo" (change)="getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)"
+                                <select class="form-select" #selectList id="id_modelo" name="id_modelo"
+                                    (change)="getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)"
                                     formControlName="id_modelo">
                                     <option value="" disabled selected>Selecione</option>
-                                    <option *ngFor="let modelo of modelos" value="{{modelo.modelo_id_modelo}}"   >
+                                    <option *ngFor="let modelo of modelos" value="{{modelo.modelo_id_modelo}}">
                                         {{modelo.modelo_modelo}}</option>
                                 </select>
-                                <label for="floatingSelect">Modelo</label> 
+                                <label for="floatingSelect">Modelo</label>
                             </div>
                         </div>
-                       
+
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="id_tipo_comando" name="id_tipo_comando" (change)="getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)"
+                                <select class="form-select" id="id_tipo_comando" name="id_tipo_comando"
+                                    (change)="getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)"
                                     formControlName="id_tipo_comando">
                                     <option value="" disabled selected>Selecione</option>
                                     <option *ngFor="let tipo_comando of tipo_comandos"
-                                        value="{{tipo_comando.tipo_comando_id_tipo_comando}}">{{tipo_comando.tipo_comando_tipo_comando}}</option>
+                                        value="{{tipo_comando.tipo_comando_id_tipo_comando}}">
+                                        {{tipo_comando.tipo_comando_tipo_comando}}</option>
                                 </select>
                                 <label for="floatingSelect">Tipo de comando</label>
                             </div>
                         </div>
                     </div>
-                    <div class="row">                        
+                    <div class="row" *ngIf="expression">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text"  class="form-control"
-                                    formControlName="telefone" name="telefone" id="telefone" placeholder="Número da linha" >
+                                <input type="text" class="form-control" formControlName="telefone" name="telefone"
+                                    id="telefone" placeholder="Número da linha">
                                 <label for="telefone">Número da linha </label>
                             </div>
                         </div>
                     </div>
-                    <div class="row">                        
+                   
+                    <div *ngFor="let item of camposComando">
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">
-                                <input type="text"  class="form-control"
-                                    formControlName="comando" name="comando" id="comando"  >
-                                <label for="comando">Comando</label>
+                                <input type="{{item.tipo}}" class="form-control"  placeholder="{{item.campo}}"
+                                    id="comando" numeric>
+                                <label for="comando">{{item.label}}</label>
                             </div>
-                        </div>
+                        </div>                       
                     </div>
 
                     <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
                     <div class="text-end ">
                         <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
-                            <button class="btn btn-secondary w-md waves-effect waves-light"
-                                [routerLink]="['/']">
+                            <button class="btn btn-secondary w-md waves-effect waves-light" [routerLink]="['/']">
                                 Voltar</button> {{' '}}
                             <button class="btn btn-primary w-md waves-effect waves-light" type="submit"
                                 (ngSubmit)="onSubmit()">
@@ -61,8 +64,7 @@
                     </div>
                 </div>
             </form>
-             
-                <br />
+            <br />{{item | json}}
         </div>
     </div> <!-- end col -->
 </div>

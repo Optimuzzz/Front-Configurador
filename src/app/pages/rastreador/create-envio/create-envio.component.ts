@@ -30,6 +30,7 @@ export class EnvioComandoComponent implements OnInit {
   allFieldsUpdate: any;
   hasUnsavedData: any;
   tipo_comandos: any = [];
+  id_comando: any;
 
 
 
@@ -86,27 +87,29 @@ export class EnvioComandoComponent implements OnInit {
   }
 
   comandoEnvio(id1?: any, id2?: any) {
-   // console.log(id1, id2)
     if (id1 && id2) {
       this.rastreadorService
         .getComandoEnvio(id1, id2)
         .pipe()
-        .subscribe((Data) => {
-          console.log(Data);      
-        //  this.campoComandoEnvio(Data))
+        .subscribe((Data: any) => {
+          this.id = Data[0].id_comando;
+          this.campoComandoEnvio(this.id);
         });
     }
   }
 
-  // campoComandoEnvio(id: any) {
-  //   this.rastreadorService
-  //     .getCampoComandoEnvio(id)
-  //     .pipe()
-  //     .subscribe((Data) => {
-  //       console.log(this.envioForm.controls.comando.value);
-  //      // console.log(Data)
-  //     });
-  // }
+  campoComandoEnvio(id: any) {
+    this.rastreadorService
+      .getCampoComandoEnvio(id)
+      .pipe()
+      .subscribe((Data: any) => {
+        //console.log(Data)
+        if(Data){
+        this.camposComando = Data;
+        console.log(this.camposComando);
+        }
+      });
+  }
 
   get f() {
     return this.envioForm.controls;

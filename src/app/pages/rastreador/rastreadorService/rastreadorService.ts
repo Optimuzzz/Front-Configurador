@@ -186,7 +186,7 @@ export class RastreadorService {
     }
 
     getCampoComandoEnvio(id?: any) {
-        return this.http.get(`${environment.api}/comando/get/field-command/send/${id}`);
+        return this.http.get(`${environment.api}/comando-campos/id_comando/${id}`);
     }
 /////=============================
 
