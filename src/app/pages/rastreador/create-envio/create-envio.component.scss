@@ -1,0 +1,19 @@
+textarea {
+    height: 200px;
+}
+
+.bodySelect {
+    overflow-y: scroll;
+    height: 200px;
+    margin-top: 15px;
+    padding: 20px;
+    border: 1px solid #94949e;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+i {
+    font-size: 1.3rem;
+    margin-top: 10px;
+    position: relative;
+    right: 30px;
+}

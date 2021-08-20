@@ -21,25 +21,17 @@ export class EnvioComandoComponent implements OnInit {
   id_tipo_comando: any;
   id_modelo: any;
   modelos: any = [];
-  countSeparator: any;
-  listCampos: any[] = [];
-  found: any;
-  verific: boolean = false;
   camposComando: any;
-  getIDCampo: any;
-  allFieldsUpdate: any;
-  hasUnsavedData: any;
   tipo_comandos: any = [];
   id_comando: any;
-
-
+  comando: string = '';
+  camposEnvio: any[] = [];
 
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
     private fb: FormBuilder,
-
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +45,8 @@ export class EnvioComandoComponent implements OnInit {
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
       telefone: ['', Validators.required],
-      comando: ['']
+      comando: [''],
+      camposEnvio: this.fb.array([]),
     })
 
 
@@ -61,6 +54,7 @@ export class EnvioComandoComponent implements OnInit {
     this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
 
   }
+
   // termino do ngOnInit
   getAllTipoComandoEnvio(id?: any) {
     this.rastreadorService
@@ -93,6 +87,15 @@ export class EnvioComandoComponent implements OnInit {
         .pipe()
         .subscribe((Data: any) => {
           this.id = Data[0].id_comando;
+          this.comando = Data[0].comando;
+          const regex = /\{\{\w{1,}\}\}/g;
+          let teste: any  = this.comando.match(regex);
+          console.log(teste);
+          console.log(this.comando);
+          this.comando = this.comando.replace(teste[0], 'substituido01');
+          this.comando = this.comando.replace(teste[1], 'substituido02');
+          this.comando = this.comando.replace(teste[2], 'substituido03');
+          console.log(this.comando);
           this.campoComandoEnvio(this.id);
         });
     }
@@ -106,7 +109,7 @@ export class EnvioComandoComponent implements OnInit {
         //console.log(Data)
         if(Data){
         this.camposComando = Data;
-        console.log(this.camposComando);
+        console.log(Data);
         }
       });
   }
