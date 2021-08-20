@@ -41,22 +41,36 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" formControlName="comando" name="comando" [ngModel]="comando" value="{{comando}}"
+                                    id="comando" placeholder="Número da linha">
+                                <label for="comando">Comando</label>
+                            </div>
+                        </div>
+                    </div>
 
                     <hr>
                    
                     <p style="margin-bottom: 15px" *ngIf="camposComando"><strong >Preencher os campos do comando</strong></p>
 
-                    <div *ngFor="let item of camposComando; let i = index">
-                        <div class="col-lg-6">
-                            <div>
-                                <label for="comando">{{item.label}}</label>
-                                <input style="margin-bottom: 15px;" type="{{item.tipo}}" class="form-control"  placeholder="{{item.campo}}" id="comando">
-                            </div>
-                        </div>                      
+                    <div formArrayName="quantities">
+                    <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+                        <div>
+                            <div class="col-lg-6">
+                                <div class="form-floating mb-3">
+                                    <input style="margin-bottom: 15px;" type="{{camposComando[i].tipo}}" class="form-control" formControlName="camposEnvio" [(ngModel)]="camposEnvio[i]" placeholder="{{camposComando[i].campo}}" id="{{i}}">
+                                    <label for="{{i}}">{{camposComando[i].label}}</label>
+                                </div>
+                            </div>                      
+                        </div>
+                        <strong>{{camposEnvio[i]}}</strong>
                     </div>
+                </div>
 
                     <strong>{{comando}}</strong>
-
+                    <!-- <strong>{{this.envioForm.controls.quantities.value | json}}</strong> -->
                     <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
                     <div class="text-end ">
                         <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">

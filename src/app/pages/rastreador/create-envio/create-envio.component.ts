@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { first } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class EnvioComandoComponent implements OnInit {
   tipo_comandos: any = [];
   id_comando: any;
   comando: string = '';
-  camposEnvio: any[] = [];
+  camposEnvio: string[] = [];
 
   constructor(
     private router: Router,
@@ -36,6 +36,7 @@ export class EnvioComandoComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.breadCrumbItems = [
       { label: 'Envio' },
       { label: 'Envio de Comando', active: true },
@@ -45,8 +46,8 @@ export class EnvioComandoComponent implements OnInit {
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
       telefone: ['', Validators.required],
-      comando: [''],
-      camposEnvio: this.fb.array([]),
+      comando: ['', Validators.required],
+      quantities: this.fb.array([]),
     })
 
 
@@ -88,14 +89,15 @@ export class EnvioComandoComponent implements OnInit {
         .subscribe((Data: any) => {
           this.id = Data[0].id_comando;
           this.comando = Data[0].comando;
-          const regex = /\{\{\w{1,}\}\}/g;
-          let teste: any  = this.comando.match(regex);
-          console.log(teste);
-          console.log(this.comando);
-          this.comando = this.comando.replace(teste[0], 'substituido01');
-          this.comando = this.comando.replace(teste[1], 'substituido02');
-          this.comando = this.comando.replace(teste[2], 'substituido03');
-          console.log(this.comando);
+          // const regex = /\{\{\w{1,}\}\}/g;
+          // let teste: any  = this.comando.match(regex);
+          // console.log(teste);
+          // console.log(this.comando);
+          // this.comando = this.comando.replace(teste[0], 'substituido01');
+          // this.comando = this.comando.replace(teste[1], 'substituido02');
+          // this.comando = this.comando.replace(teste[2], 'substituido03');
+          // console.log(this.comando);
+
           this.campoComandoEnvio(this.id);
         });
     }
@@ -106,12 +108,27 @@ export class EnvioComandoComponent implements OnInit {
       .getCampoComandoEnvio(id)
       .pipe()
       .subscribe((Data: any) => {
-        //console.log(Data)
         if(Data){
         this.camposComando = Data;
+        Data.forEach((element: any) => {
+          this.quantities().push(this.newQuantity(element));
+        });
+        
         console.log(Data);
         }
       });
+  }
+
+  quantities(): FormArray {
+    return this.envioForm.get('quantities') as FormArray;
+  }
+
+   // vai ser chamado no gerar campos na hora do cadastro
+   newQuantity(value: any): FormGroup {
+     console.log(value)
+    return this.fb.group({
+      camposEnvio: [''],
+    });
   }
 
   get f() {
@@ -122,10 +139,17 @@ export class EnvioComandoComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.envioForm.value)
+    const value =  this.f.comando.value
+    const regex = /\{\{\w{1,}\}\}/g;
+    let teste: any  = value.match(regex);
+    // criar um for onde o length sera quantities
+    //vai usar esse modelo para realizar o replace 
+     // this.comando = this.comando.replace(teste[0], 'substituido01');
+        // this.comando = this.comando.replace(teste[1], 'substituido02');
+        // this.comando = this.comando.replace(teste[2], 'substituido03');  
+    console.log(teste);
+     console.log(this.f.quantities.value.length)
   }
-
-
 
   concluded() {
     Swal.fire({
@@ -137,10 +161,6 @@ export class EnvioComandoComponent implements OnInit {
     });
     this.router.navigate([`/search-comando`]);
   }
-
-
-
-
 }
 
 
