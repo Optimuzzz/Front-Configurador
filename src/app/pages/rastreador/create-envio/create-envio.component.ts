@@ -1,5 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { first } from 'rxjs/operators';
@@ -8,7 +14,7 @@ import { Comando } from '../models/comando.models';
 
 @Component({
   selector: 'app-create-envio',
-  templateUrl: './create-envio.component.html'
+  templateUrl: './create-envio.component.html',
 })
 export class EnvioComandoComponent implements OnInit {
   envioForm!: FormGroup;
@@ -24,19 +30,17 @@ export class EnvioComandoComponent implements OnInit {
   camposComando: any;
   tipo_comandos: any = [];
   id_comando: any;
-  comando: string = '';
+  comando: any;
   camposEnvio: string[] = [];
 
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private rastreadorService: RastreadorService,
-    private fb: FormBuilder,
-  ) { }
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-
-
     this.breadCrumbItems = [
       { label: 'Envio' },
       { label: 'Envio de Comando', active: true },
@@ -48,12 +52,10 @@ export class EnvioComandoComponent implements OnInit {
       telefone: ['', Validators.required],
       comando: ['', Validators.required],
       quantities: this.fb.array([]),
-    })
+    });
 
-
-    this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value)
-    this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value)
-
+    this.getAllTipoComandoEnvio(this.envioForm.controls.id_modelo.value);
+    this.getAllModeloEnvio(this.envioForm.controls.id_tipo_comando.value);
   }
 
   // termino do ngOnInit
@@ -63,8 +65,14 @@ export class EnvioComandoComponent implements OnInit {
       .pipe()
       .subscribe((Data) => {
         this.tipo_comandos = Data;
-        if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
-          this.comandoEnvio(this.envioForm.controls.id_tipo_comando.value, this.envioForm.controls.id_modelo.value)
+        if (
+          this.envioForm.controls.id_tipo_comando.value &&
+          this.envioForm.controls.id_modelo.value
+        ) {
+          this.comandoEnvio(
+            this.envioForm.controls.id_tipo_comando.value,
+            this.envioForm.controls.id_modelo.value
+          );
         }
       });
   }
@@ -75,8 +83,14 @@ export class EnvioComandoComponent implements OnInit {
       .pipe()
       .subscribe((Data) => {
         this.modelos = Data;
-        if (this.envioForm.controls.id_tipo_comando.value && this.envioForm.controls.id_modelo.value) {
-          this.comandoEnvio(this.envioForm.controls.id_tipo_comando.value, this.envioForm.controls.id_modelo.value)
+        if (
+          this.envioForm.controls.id_tipo_comando.value &&
+          this.envioForm.controls.id_modelo.value
+        ) {
+          this.comandoEnvio(
+            this.envioForm.controls.id_tipo_comando.value,
+            this.envioForm.controls.id_modelo.value
+          );
         }
       });
   }
@@ -89,15 +103,6 @@ export class EnvioComandoComponent implements OnInit {
         .subscribe((Data: any) => {
           this.id = Data[0].id_comando;
           this.comando = Data[0].comando;
-          // const regex = /\{\{\w{1,}\}\}/g;
-          // let teste: any  = this.comando.match(regex);
-          // console.log(teste);
-          // console.log(this.comando);
-          // this.comando = this.comando.replace(teste[0], 'substituido01');
-          // this.comando = this.comando.replace(teste[1], 'substituido02');
-          // this.comando = this.comando.replace(teste[2], 'substituido03');
-          // console.log(this.comando);
-
           this.campoComandoEnvio(this.id);
         });
     }
@@ -108,13 +113,11 @@ export class EnvioComandoComponent implements OnInit {
       .getCampoComandoEnvio(id)
       .pipe()
       .subscribe((Data: any) => {
-        if(Data){
-        this.camposComando = Data;
-        Data.forEach((element: any) => {
-          this.quantities().push(this.newQuantity(element));
-        });
-        
-        console.log(Data);
+        if (Data) {
+          this.camposComando = Data;
+          Data.forEach((element: any) => {
+            this.quantities().push(this.newQuantity(element));
+          });
         }
       });
   }
@@ -123,9 +126,8 @@ export class EnvioComandoComponent implements OnInit {
     return this.envioForm.get('quantities') as FormArray;
   }
 
-   // vai ser chamado no gerar campos na hora do cadastro
-   newQuantity(value: any): FormGroup {
-     console.log(value)
+  // vai ser chamado no gerar campos na hora do cadastro
+  newQuantity(value: any): FormGroup {
     return this.fb.group({
       camposEnvio: [''],
     });
@@ -137,18 +139,24 @@ export class EnvioComandoComponent implements OnInit {
 
   //PEGANDO OS DADOS DO comando NA API ATRAVES DO ID
 
-
   onSubmit() {
-    const value =  this.f.comando.value
+    const value = this.f.comando.value;
     const regex = /\{\{\w{1,}\}\}/g;
-    let teste: any  = value.match(regex);
-    // criar um for onde o length sera quantities
-    //vai usar esse modelo para realizar o replace 
-     // this.comando = this.comando.replace(teste[0], 'substituido01');
-        // this.comando = this.comando.replace(teste[1], 'substituido02');
-        // this.comando = this.comando.replace(teste[2], 'substituido03');  
-    console.log(teste);
-     console.log(this.f.quantities.value.length)
+    let found: any = value.match(regex);
+
+    for (let i = 0; i < this.f.quantities.value.length; i++) {
+      this.comando = this.comando.replace(found[i], this.f.quantities.value[i].camposEnvio);
+    }
+
+    const telefone = this.f.telefone.value;
+    const comando = this.comando
+
+    this.rastreadorService.sendCommandSMS({telefone, comando})
+    .subscribe(
+      (response: any) => {
+        console.log(response.error.text);
+      }
+    )
   }
 
   concluded() {
@@ -162,5 +170,3 @@ export class EnvioComandoComponent implements OnInit {
     this.router.navigate([`/search-comando`]);
   }
 }
-
-

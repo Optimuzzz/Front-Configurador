@@ -6,6 +6,7 @@ import { Modelo } from '../models/modelo.models';
 import { TipoComando } from '../models/tipo-comando.models';
 import { Comando } from '../models/comando.models';
 import { Fabricante } from '../models/fabricante.models';
+import { SendModel } from '../models/sendModels';
 
 
 
@@ -171,7 +172,10 @@ export class RastreadorService {
     deleteUniqueCampoId(id: any) {
         return this.http.delete(`${environment.api}/comando-campos/uniqueId${id}`);
     }
+
+
     /////=======// ENVIO//==============
+
     getAllTipoComandoEnvio(id?: any) {
         return this.http.get(`${environment.api}/comando/get/typecommand/${id}`);
     }
@@ -187,6 +191,10 @@ export class RastreadorService {
 
     getCampoComandoEnvio(id?: any) {
         return this.http.get(`${environment.api}/comando-campos/id_comando/${id}`);
+    }
+
+    sendCommandSMS(sendModels: SendModel){
+        return this.http.post<any>(`${environment.api}/envio`, sendModels);        
     }
 /////=============================
 

@@ -14,6 +14,7 @@ import { SearchTipoComandoComponent } from './search-tipo-comando/search-tipo-co
 import { ComandoComponent } from './create-comando/create-comando.component';
 import { SearchComandoComponent } from './search-comando/search-comando.component';
 import { EnvioComandoComponent } from './create-envio/create-envio.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { EnvioComandoComponent } from './create-envio/create-envio.component';
     SharedModule,
     PipesModule,
     NgxPaginationModule,
-    RastreadorRoutingModule
+    RastreadorRoutingModule,
+    NgxMaskModule.forRoot(),
   ]
  
 })
