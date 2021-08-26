@@ -6,12 +6,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { first } from 'rxjs/operators';
 import { RastreadorService } from '../rastreadorService/rastreadorService';
-import { Comando } from '../models/comando.models';
-
 @Component({
   selector: 'app-create-envio',
   templateUrl: './create-envio.component.html',
@@ -31,6 +29,7 @@ export class EnvioComandoComponent implements OnInit {
   tipo_comandos: any = [];
   id_comando: any;
   comando: any;
+  message: any;
   camposEnvio: string[] = [];
 
   constructor(
@@ -49,7 +48,7 @@ export class EnvioComandoComponent implements OnInit {
     this.envioForm = this.fb.group({
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
-      telefone: ['', Validators.required],
+      telefone: ['', Validators.required, Validators.maxLength(11)],
       comando: ['', Validators.required],
       quantities: this.fb.array([]),
     });
@@ -115,6 +114,8 @@ export class EnvioComandoComponent implements OnInit {
       .subscribe((Data: any) => {
         if (Data) {
           this.camposComando = Data;
+          //limpar o formulário quantities, caso mudar a pesquisa do comando
+           this.quantities().clear()
           Data.forEach((element: any) => {
             this.quantities().push(this.newQuantity(element));
           });
@@ -154,7 +155,14 @@ export class EnvioComandoComponent implements OnInit {
     this.rastreadorService.sendCommandSMS({telefone, comando})
     .subscribe(
       (response: any) => {
-        console.log(response.error.text);
+        if(response){
+          console.log()
+          if(response['Success'] == true){
+            this.concluded();
+          }else{
+            this.message = "Comando não enviado!!!";
+          }
+        }
       }
     )
   }
@@ -163,10 +171,12 @@ export class EnvioComandoComponent implements OnInit {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Ação concluída com Sucesso!',
+      title: 'Comando enviado com sucesso!',
       showConfirmButton: false,
       timer: 1500,
     });
-    this.router.navigate([`/search-comando`]);
+    setTimeout(function () {
+      location.reload()
+  }, 200);
   }
 }

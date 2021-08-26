@@ -67,18 +67,9 @@
                         </div>
                     </div>
                 </div>
-
-                <div *ngIf="this.envioForm.controls.quantities.value != ''" class="row">
-                    <div  class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                        <h5 style="width: 450px !important">Comando</h5>
-                        <hr>
-                        <strong>{{comando}}</strong>
-                    </div>
-                </div>
-
                     
                     <!-- <strong>{{this.envioForm.controls.quantities.value | json}}</strong> -->
-                    <p *ngIf="messageError != '' " class="alert alert-danger">{{messageError}}</p>
+                    <p *ngIf="messageError != '' " class="alert alert-danger">{{message}}</p>
                     <div class="text-end ">
                         <div class="p-2" style="background-color: rgba(0, 0, 0, 0.03);">
                             <button class="btn btn-secondary w-md waves-effect waves-light" [routerLink]="['/']">
