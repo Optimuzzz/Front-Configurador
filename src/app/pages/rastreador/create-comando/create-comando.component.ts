@@ -225,25 +225,30 @@ export class ComandoComponent implements OnInit, ComponentCanDeactivate {
     let verifica = false;
     this.isDirty = false;
 
-    if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
-      for (let i = 0; i < this.found.length; i++) {
-        if (this.found[i] != this.comandoForm.getRawValue().quantities[i].campo) {
-          this.messageError = `O valor do campo ${i + 1} não está de acordo com o seu comando`;
-          verifica = true;
+    if(this.found){
+      if (this.found.length === this.comandoForm.getRawValue().quantities.length) {
+        for (let i = 0; i < this.found.length; i++) {
+          if (this.found[i] != this.comandoForm.getRawValue().quantities[i].campo) {
+            this.messageError = `O valor do campo ${i + 1} não está de acordo com o seu comando`;
+            verifica = true;
+          }
         }
-      }
-
-      if (verifica === false) {
-        if (this.id) {
-          this.updateComando(this.id);
-        } else {
-          this.createComando();
+  
+        if (verifica === false) {
+          if (this.id) this.updateComando(this.id);
+          else this.createComando();
         }
+  
+      } else {
+        this.messageError = "A quantidade de campos não está de acordo com o seu comando!"
       }
-
-    } else {
-      this.messageError = "A quantidade de campos não está de acordo com o seu comando!"
+    }else {
+        this.rastreadorService.createComando(this.comandoForm.getRawValue())
+        .subscribe((response: any) => {
+          if(response) this.concluded();
+        });
     }
+    
   }
 
   concluded() {
