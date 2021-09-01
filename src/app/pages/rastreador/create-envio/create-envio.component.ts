@@ -177,6 +177,6 @@ export class EnvioComandoComponent implements OnInit {
     });
     setTimeout(function () {
       location.reload()
-  }, 200);
+  }, 400);
   }
 }

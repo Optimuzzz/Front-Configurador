@@ -47,35 +47,35 @@ export class SearchComandoComponent implements OnInit {
 
 	deleteId(id: any) {
 		this.RastreadorService.deleteIdComando(id)
-			.pipe()
-			.subscribe(
-				Data => {
-					if (Data) {
-						this.deleteCamposId(id);
-						location.reload();
-					}
-				},
-				error => {
-					this.error = error ? error : '';
-					this.messageError = error.error.message;
-				})
-
+		.pipe()
+		.subscribe(
+			(Data: any) => {
+				if (Data) {
+					this.deleteCamposId(id);
+					location.reload();
+				}
+			},
+			error => {
+				this.error = error ? error : '';
+				this.messageError = error.error.message;
+			}
+		)
 	}
 
 	deleteCamposId(id: any) {
 		this.RastreadorService.deleteIdCamposComando(id)
-			.pipe()
-			.subscribe(
-				Data => {
-					if (Data) {
-						this.ngOnInit();
-					}
-				},
-				error => {
-					this.error = error ? error : '';
-					this.messageError = error.error.message;
-				})
-
+		.pipe()
+		.subscribe(
+			(Data: any) => {
+				if (Data) {
+					this.ngOnInit();
+				}
+			},
+			error => {
+				this.error = error ? error : '';
+				this.messageError = error.error.message;
+			}
+		)
 	}
 
 
@@ -96,7 +96,6 @@ export class SearchComandoComponent implements OnInit {
 		}).then((result) => {
 			if (result.value) {
 				this.deleteId(id);
-
 				Swal.fire('Concluído!', 'O Comando foi excluído.', 'success');
 			}
 		});
