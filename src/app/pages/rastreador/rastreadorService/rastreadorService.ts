@@ -54,7 +54,6 @@ export class RastreadorService {
         */
 
     getAllModelo() {
-
         return this.http.get<Fabricante[]>(`${environment.api}/modelo`);
     }
 
@@ -64,7 +63,6 @@ export class RastreadorService {
         modelo.id_login_insert = decoded.id;
 
         return this.http.post<Fabricante>(`${environment.api}/modelo`, modelo);
-
     }
 
     getIdModelo(id: any) {
@@ -87,7 +85,6 @@ export class RastreadorService {
         */
 
     getAllTipoComando() {
-
         return this.http.get<Fabricante[]>(`${environment.api}/tipo-comando`);
     }
 
@@ -120,7 +117,6 @@ export class RastreadorService {
         */
 
     getAllComando() {
-
         return this.http.get<Fabricante[]>(`${environment.api}/comando`);
     }
 
@@ -193,8 +189,9 @@ export class RastreadorService {
         return this.http.get(`${environment.api}/comando-campos/id_comando/${id}`);
     }
 
-    sendCommandSMS(sendModels: SendModel){
-        return this.http.post<any>(`${environment.api}/envio`, sendModels);        
+    sendCommandSMS(sendModel: SendModel){
+        console.log(sendModel);
+        return this.http.post<any>(`${environment.api}/envio`, sendModel);        
     }
 /////=============================
 

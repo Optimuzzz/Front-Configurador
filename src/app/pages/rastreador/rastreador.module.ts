@@ -31,7 +31,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 
   ],
   imports: [
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     FormsModule,
     CommonModule,
     SharedModule,

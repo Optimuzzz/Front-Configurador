@@ -1,19 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-
+import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { RastreadorService } from '../rastreadorService/rastreadorService';
+
 @Component({
   selector: 'app-create-envio',
   templateUrl: './create-envio.component.html',
 })
+
 export class EnvioComandoComponent implements OnInit {
   envioForm!: FormGroup;
   submitted = false;
@@ -48,7 +44,7 @@ export class EnvioComandoComponent implements OnInit {
     this.envioForm = this.fb.group({
       id_modelo: ['', Validators.required],
       id_tipo_comando: ['', Validators.required],
-      telefone: ['', Validators.required, Validators.maxLength(11)],
+      telefone: ['', Validators.required],
       comando: ['', Validators.required],
       quantities: this.fb.array([]),
     });
@@ -146,18 +142,28 @@ export class EnvioComandoComponent implements OnInit {
     let found: any = value.match(regex);
 
     for (let i = 0; i < this.f.quantities.value.length; i++) {
+      if(this.f.quantities.value[i].camposEnvio == undefined){
+        this.f.quantities.value[i].camposEnvio = '';
+      }
       this.comando = this.comando.replace(found[i], this.f.quantities.value[i].camposEnvio);
     }
 
-    const telefone = this.f.telefone.value;
-    const comando = this.comando
+    const telefone: string = this.f.telefone.value;
+    const comando: string = this.comando
+    const id_modelo: number = parseInt(this.f.id_modelo.value);
+    const id_tipo_comando: number = parseInt(this.f.id_tipo_comando.value);
 
-    this.rastreadorService.sendCommandSMS({telefone, comando})
+    
+    const token: any = localStorage.getItem('token');
+    const decoded: any = jwt_decode(token);
+    const id_usuario: number = decoded.id; 
+
+    this.rastreadorService.sendCommandSMS({telefone, comando, id_modelo, id_tipo_comando, id_usuario})
     .subscribe(
       (response: any) => {
         if(response){
           console.log()
-          if(response['Success'] == true){
+          if(response.results[0].status == 0){
             this.concluded();
           }else{
             this.message = "Comando não enviado!!!";
@@ -177,6 +183,6 @@ export class EnvioComandoComponent implements OnInit {
     });
     setTimeout(function () {
       location.reload()
-  }, 400);
+  }, 800);
   }
 }
